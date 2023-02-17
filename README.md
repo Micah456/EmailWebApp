@@ -13,4 +13,5 @@ Step 5: Create processapi
 Step 6: Refactor backend
 
 *Current task:*
-Review storage and format of data from prev project
+Start building sysapi
+Review storage and format of data from prev project - DONE
