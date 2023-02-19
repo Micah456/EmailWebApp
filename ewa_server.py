@@ -1,5 +1,5 @@
-from flask import Flask, Response, request
-import ewa_sysapi_func, json
+from flask import Flask, Response, request, render_template
+import ewa_sysapi_func, ewa_expapi_func, ewa_proapi_func, json
 
 app = Flask("Email Web App Server")
 
@@ -18,6 +18,16 @@ def server_error(details="No details"):
     error_message = {"Message" : "Server error.", "Details" : details}
     msg_json = json.dumps(error_message)
     return Response(msg_json, mimetype='application/json', status=500)
+
+
+# Web App
+@app.route("/web-app/login")
+def load_login_page():
+    return render_template("login.html")
+
+@app.route("/web-app/dashboard")
+def load_dashboard_page():
+    return render_template("dashboard.html")
 
 # Sys API
 # GET Requests
@@ -112,6 +122,49 @@ def update_user(userid):
         return server_error()
     msg_json = json.dumps({"Message" : "User updated"})
     return Response(msg_json, mimetype='application/json', status=200) 
+
+#ProAPI
+#POST Requests
+@app.route("/pro-api/validate", methods=["POST"])
+def validate():
+    #print("In validate: type of login_dict: ", type(request.json))
+    if ewa_proapi_func.validate(request.json):
+        #Login validated
+        msg_json = json.dumps({"Message":"Login validated"})
+        return Response(msg_json, mimetype='application/json', status=200)
+    else:
+        #Login not validated
+        msg_json = json.dumps({"Message":"Login not validated"})
+        return Response(msg_json, mimetype='application/json', status=401)
+    
+
+
+#ExpAPI
+#POST Requests
+@app.route("/exp-api/login", methods=["POST"])
+def login():
+    login_dict = request.json
+    print("Exp API: login_dict type: ", type(login_dict))
+    if ewa_expapi_func.login(login_dict):
+        msg_json = json.dumps({"Message":"Login successful"})
+        resp = Response(msg_json, mimetype='application/json', status=200)
+        resp.set_cookie("email",login_dict['email'])
+        resp.set_cookie("is_logged_in","True")
+    else:
+        msg_json = json.dumps({"Message":"Login unsuccessful"})
+        resp = Response(msg_json, mimetype='application/json', status=401)
+    return resp
+
+#TESTAPI
+
+@app.route("/test-api/cookie")
+def get_cookie():
+    #Remember to pass in email
+    email = request.args.get('email')
+    msg_json = json.dumps({"Message":"Cookie set", "email":email})
+    resp = Response(msg_json, mimetype='application/json', status=200)
+    resp.set_cookie('email',email)
+    return resp
 
 if __name__=="__main__":
     app.run(debug=True) 
