@@ -32,8 +32,8 @@ let examples = [exampleEmail, exampleEmail]
 function getEmailHTML(emailData){
     let fromInitials = emailData['From Name'].split(" ")
     fromInitials = fromInitials[0][0] + fromInitials[1][0]
-    let dateSent = emailData['Date Sent'].substring(0,10)
-    console.log(dateSent)
+    let dateSent = convertDate(emailData['Date Sent'])
+    dateSent = getShortDate(dateSent)
     let emailHTML = `
         <div class="email-tile">
             <div class="email-sub-tile">
@@ -61,16 +61,17 @@ function displayAllEmails(emailArray){
 let userEmailAddress = getCookie('email')
 userEmailAddress = userEmailAddress.substring(1,userEmailAddress.length-1)
 let userDetails = null
-fetch(`http://127.0.0.1:5000/exp-api/user?email=${userEmailAddress}`)
+let inboxEmails = []
+let sentEmails = []
+fetch(`http://127.0.0.1:5000/exp-api/load_dashboard?email=${userEmailAddress}`)
     .then(response => response.json())
     .then(data => {
-        console.log(data)
-        userDetails = JSON.parse(data)
-        return userDetails
+        //console.log(data)
+        userDetails = data['User Details']
+        inboxEmails = data['User Emails']['Inbox Emails']
+        sentEmails = data['User Emails']['Sent Emails']
+        setDashBoardData()
     })
-
-    let inboxEmails = []
-
 currentUserEl.textContent = `Welcome: ${userEmailAddress}`
 //Add code to exp api etc to extract emails- I want it to return an object containing two objects
 //1st points to array of inbox emails(to user)
@@ -78,4 +79,15 @@ currentUserEl.textContent = `Welcome: ${userEmailAddress}`
 //Add INBOX emails to inboxEmails
 //Then run displayAllEmails for the INBOX emails for this page
 
-displayAllEmails(examples) //Change to inboxEmails once above api feature created
+//displayAllEmails(inboxEmails) //Change to inboxEmails once above api feature created
+function setDashBoardData(){
+    displayAllEmails(inboxEmails)
+}
+
+function convertDate(dateInMs){
+    return new Date(dateInMs)
+}
+
+function getShortDate(date){
+    return `${(date.getDate()).toString().padStart(2,0)}/${(date.getMonth()).toString().padStart(2,0)}/${date.getFullYear()}`
+}

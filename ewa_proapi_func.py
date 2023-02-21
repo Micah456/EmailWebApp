@@ -46,3 +46,45 @@ def load_user(email):
             return json.dumps(found_user)
     print("Email not found")
     return None
+
+def load_user_emails(userid, user_email_address):
+    #Load all emails
+    resp = requests.get("http://127.0.0.1:5000/sys-api/emails")
+    email_dict = resp.json()
+    #Filter emails
+    inbox_list = []
+    sent_list = []
+    for i in range(len(email_dict)):
+        found_email = email_dict[str(i)]
+        if found_email['From Email'] == user_email_address:
+            #sent email
+            sent_list.append(found_email)
+        elif found_email['To Email'] == user_email_address and not(found_email['Draft']):
+            #inbox email
+            inbox_list.append(found_email)
+    #Return object containing both lists
+    user_email_dict = {"Inbox Emails" : inbox_list,"Sent Emails" : sent_list}
+    user_emails = json.dumps(user_email_dict)
+    return user_emails
+
+
+def get_user_email_address(userid):
+    #Load user
+    url = "http://127.0.0.1:5000/sys-api/users/" + userid 
+    resp = requests.get(url)
+    user_dict = resp.json()
+    #Return address
+    return user_dict['Email Address']
+
+def get_dashboard(email):
+    user = load_user(email)
+    print(user)
+    user_dict = json.loads(user)
+    userid = user_dict['ID']
+    #Get email dict
+    user_emails = load_user_emails(userid, email)
+    user_emails_dict = json.loads(user_emails)
+    #Return combined as json obj
+    dashboard_dict = {"User Details" : user_dict, "User Emails" : user_emails_dict}
+    return json.dumps(dashboard_dict)
+

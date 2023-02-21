@@ -18,6 +18,21 @@ def load_user(email):
     else:
         return None
 
-def load_user_emails():
-    #TODO complete this: also complete on ewa_server.py - the route has not yet been declared
-    pass
+def load_user_emails(userid):
+    #TODO complete this
+    url = "http://127.0.0.1:5000/pro-api/user/" + userid + "/emails"
+    resp = requests.get(url)
+    if(resp.ok):
+        user_emails = resp.json()
+        return json.dumps(user_emails)
+    else:
+        return None
+
+def load_user_dashboard(email):
+    url = "http://127.0.0.1:5000/pro-api/get_dashboard?email=" + email
+    resp = requests.get(url)
+    if resp.ok:
+        dashboard_dict = resp.json()
+        return json.dumps(dashboard_dict)
+    else:
+        return None

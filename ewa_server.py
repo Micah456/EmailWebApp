@@ -134,6 +134,24 @@ def load_user_proapi():
     else:
         return resource_not_found()
 
+@app.route("/pro-api/user/<userid>/emails")
+def load_user_emails_proapi(userid):
+    user_email_address = ewa_proapi_func.get_user_email_address(userid)
+    user_emails = ewa_proapi_func.load_user_emails(userid, user_email_address)
+    if user_emails:
+        return Response(user_emails, mimetype='application/json', status=200)
+    else:
+        return resource_not_found()
+
+@app.route("/pro-api/get_dashboard")
+def get_dashboard():
+    user_email = request.args.get('email')
+    dashboard = ewa_proapi_func.get_dashboard(user_email)
+    if dashboard:
+        return Response(dashboard, mimetype='application/json', status=200)
+    else:
+        return resource_not_found()
+
 #POST Requests
 @app.route("/pro-api/validate", methods=["POST"])
 def validate():
@@ -156,7 +174,25 @@ def load_user_expapi():
     user_email = request.args.get('email')
     user_data = ewa_expapi_func.load_user(user_email)
     if user_data:
-        return user_data
+        return Response(user_data, mimetype='application/json', status=200)
+    else:
+        return resource_not_found()
+
+@app.route("/exp-api/user/<userid>/emails")
+def load_user_emails_expapi(userid):
+    #NOTE userid should be passed as int
+    user_emails = ewa_expapi_func.load_user_emails(userid)
+    if user_emails:
+        return Response(user_emails, mimetype='application/json', status=200)
+    else:
+        return resource_not_found()
+
+@app.route("/exp-api/load_dashboard")
+def load_user_dashboard():
+    user_email = request.args.get('email')
+    dashboard_data = ewa_expapi_func.load_user_dashboard(user_email)
+    if dashboard_data:
+        return Response(dashboard_data, mimetype='application/json', status=200)
     else:
         return resource_not_found()
 
