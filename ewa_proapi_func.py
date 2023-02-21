@@ -32,3 +32,17 @@ def validate(login_dict):
     else:
         #Email not valid
         return False
+
+def load_user(email):
+    #Load all users
+    resp = requests.get("http://127.0.0.1:5000/sys-api/users")
+    user_dict = resp.json()
+    #Filter users
+    for i in range(len(user_dict)):
+        found_user = user_dict[str(i)]
+        found_email_address = found_user['Email Address']
+        print(found_email_address)
+        if found_email_address == email:
+            return json.dumps(found_user)
+    print("Email not found")
+    return None

@@ -5,7 +5,10 @@ Design:
 database (csv for now) - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
--Load user and email data into dashboard and use to build dashboard
+-Load emails into dashboard and set resulting inbox array 
+Note: The response from the exp-api should be two arrays: inboxEmails[] and sentEmails[]
+Should be split by Pro-api. Consider using similar filtering technique to user but accounting
+for whether inbox or sent email. Splitting into 2 arrays should be done at filtering stage
 
 *Remaining tasks:*
 -Implement log out (remember to update/remove cookies- see expapi in ewa_server)
@@ -17,6 +20,7 @@ database (csv for now) - sysapi - processapi - expapi - html/css/js
 -Refactor
 
 *Previous tasks:*
+-Load user details to dashboard - DONE
 -Build login page and implement login using front end, exp api and sys api - DONE
 -Start building sysapi - DONE
 -Review storage and format of data from prev project - DONE
@@ -25,6 +29,8 @@ database (csv for now) - sysapi - processapi - expapi - html/css/js
 -Enable deletion of draft emails - involves trash folder
 -Enable deletion of sent emails - involves trash folder - email has TrashFrom and TrashTo boolean attributes
 -Connect to database and rework sysapi
+-Media queries
+-Running apis as separate scripts on different ports
 
 *Notes:*
 -Output folder is used for testing purposes only

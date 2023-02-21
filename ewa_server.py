@@ -124,6 +124,16 @@ def update_user(userid):
     return Response(msg_json, mimetype='application/json', status=200) 
 
 #ProAPI
+#GET Requests
+@app.route("/pro-api/load_user")
+def load_user_proapi():
+    user_email = request.args.get('email')
+    user_data = ewa_proapi_func.load_user(user_email)
+    if user_data:
+        return Response(user_data, mimetype='application/json', status=200)
+    else:
+        return resource_not_found()
+
 #POST Requests
 @app.route("/pro-api/validate", methods=["POST"])
 def validate():
@@ -140,12 +150,22 @@ def validate():
 
 
 #ExpAPI
+#GET Requests
+@app.route("/exp-api/user")
+def load_user_expapi():
+    user_email = request.args.get('email')
+    user_data = ewa_expapi_func.load_user(user_email)
+    if user_data:
+        return user_data
+    else:
+        return resource_not_found()
+
 #POST Requests
 @app.route("/exp-api/login", methods=["POST"])
 def login():
     login_dict = request.json
     print("Exp API: login_dict type: ", type(login_dict))
-    if ewa_expapi_func.login(login_dict):
+    if ewa_expapi_func.validate(login_dict):
         msg_json = json.dumps({"Message":"Login successful"})
         resp = Response(msg_json, mimetype='application/json', status=200)
         resp.set_cookie("email",login_dict['email'])
