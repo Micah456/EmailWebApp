@@ -5,7 +5,8 @@ Design:
 database (csv for now) - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
--Implement read emails
+-Implement clicking of emails on dashboard to load reademail.html with appropriate email.
+Note the format of request must be: "/web-app/drafts/emailid" - consider making email-tile id include the email id number and then use onclick method to return the id, get emailid from that, and then use that to make the request.
 
 *Remaining tasks:*
 -Implement write emails
@@ -15,6 +16,7 @@ database (csv for now) - sysapi - processapi - expapi - html/css/js
 -Refactor
 
 *Previous tasks:*
+-Implement reademail.html page including rendering emails from rest api requests - DONE
 -Implement log out (remember to update/remove cookies- see expapi in ewa_server) - DONE
 -Implement sent and draft pages AND get buttons to work so you can switch between the two - DONE
 -Change dashboard to inbox page- have login direct user to this pagesent emails display AND get sidebar button to work - DONE
@@ -25,7 +27,9 @@ Load emails into dashboard and set resulting inbox array - DONE
 -Review storage and format of data from prev project - DONE
 
 *Possible future tasks (stretch goals- please branch):*
+-Implement print button for emails
 -Change date displayed on emails to time or day of the week if within given time period
+-Implement forward and replies
 -Enable deletion of draft emails - involves trash folder
 -Enable deletion of sent emails - involves trash folder - email has TrashFrom and TrashTo boolean attributes
 -Connect to database and rework sysapi

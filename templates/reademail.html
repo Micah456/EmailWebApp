@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+    <head>
+        <title id="page-title">Inbox</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../../static/reademail.css">
+    </head>
+    <body>
+        <center><main>
+            <div class="header">
+                <p id="current-user" class="current-user">Welcome: User</p>
+                <button id="logout-btn">Log out</button>
+                <button id="settings-btn">Settings</button>
+            </div>
+            <div class="title-bar">
+                <h1 id="h1-page-title" class="title">Inbox</h1>
+            </div>
+            <div class="container">
+                <div id="sidebar" class="sidebar">
+                    <button id='inbox-btn' class='sidebar-btn'>Inbox</button>
+                    <button id='drafts-btn' class='sidebar-btn'>Drafts</button>
+                    <button id='sent-btn' class='sidebar-btn'>Sent</button>
+                    <button id='new-mail-btn' class='sidebar-btn'>New Mail</button>
+                </div>
+                <div class="email-display">
+                    <div class="email-action-container">
+                        <button id='edit-btn' class='email-btn'>Edit</button>
+                        <button id='delete-btn' class='email-btn'>Delete</button>
+                    </div>
+                    <div id="email-preview" class="email-preview">
+                        <div class="email-header">
+                            <h2>Subject</h2>
+                            <div class="email-subheader">
+                                <div class="from-user-tile">
+                                    <div id="from-user-icon" class="from-user-icon"><span>DV</span>
+                                    </div>
+                                    <p id="from-email"><span class="bolder">Duane Vaughn</span><br>{duanevaughn@gmail.com}</p>
+                                </div>
+                                <p id="date-sent">22/02/2023 12:03</p>
+                            </div>
+                            <p id="to-email">To: Marlee Vaughn {marleevaughn@outlook.com}</p>
+                        </div>
+                        <p id="message">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    </div>
+                </div>
+            </div>
+        </main></center>
+        <script src="../../static/reademail.js"></script>
+    </body>
+</html>

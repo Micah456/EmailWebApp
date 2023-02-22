@@ -37,6 +37,15 @@ def load_sent_page():
 def load_drafts_page():
     return render_template("drafts.html")
 
+@app.route("/web-app/inbox/<emailid>")
+@app.route("/web-app/sent/<emailid>")
+@app.route("/web-app/drafts/<emailid>")
+def load_read_email(emailid):
+    if request.args.get("edit") == "True":
+        return server_error("Feature has not yet been implemented! Come back later!")
+    else:
+        return render_template("reademail.html")
+
 # Sys API
 # GET Requests
 @app.route("/sys-api")
