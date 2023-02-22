@@ -5,10 +5,9 @@ Design:
 database (csv for now) - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
--Change dashboard to inbox page- have login direct user to this pagesent emails display AND get sidebar button to work
+-Implement sent and draft pages AND get buttons to work so you can switch between the two
 
 *Remaining tasks:*
--Implement sent and draft pages AND get buttons to work so you can switch between the two
 -Implement draft emails display (not read)
 -Implement log out (remember to update/remove cookies- see expapi in ewa_server)
 -Implement read emails
@@ -19,6 +18,7 @@ database (csv for now) - sysapi - processapi - expapi - html/css/js
 -Refactor
 
 *Previous tasks:*
+-Change dashboard to inbox page- have login direct user to this pagesent emails display AND get sidebar button to work - DONE
 Load emails into dashboard and set resulting inbox array - DONE
 -Load user details to dashboard - DONE
 -Build login page and implement login using front end, exp api and sys api - DONE
