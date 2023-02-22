@@ -26,8 +26,16 @@ def load_login_page():
     return render_template("login.html")
 
 @app.route("/web-app/inbox")
-def load_dashboard_page():
+def load_inbox_page():
     return render_template("inbox.html")
+
+@app.route("/web-app/sent")
+def load_sent_page():
+    return render_template("sent.html")
+
+@app.route("/web-app/drafts")
+def load_drafts_page():
+    return render_template("drafts.html")
 
 # Sys API
 # GET Requests
