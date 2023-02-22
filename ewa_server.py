@@ -204,6 +204,15 @@ def load_user_dashboard():
     else:
         return resource_not_found()
 
+@app.route("/exp-api/logout")
+def log_out():
+    message = {"Message" : "Logout successful"}
+    msg_json = json.dumps(message)
+    resp = Response(msg_json, mimetype='application/json', status=200)
+    resp.set_cookie("email",'',expires=0)
+    resp.set_cookie("is_logged_in","False")
+    return resp
+
 #POST Requests
 @app.route("/exp-api/login", methods=["POST"])
 def login():

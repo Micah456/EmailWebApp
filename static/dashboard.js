@@ -4,6 +4,7 @@ const inboxBtnEl = document.getElementById("inbox-btn")
 const sentBtnEl = document.getElementById("sent-btn")
 const draftsBtnEl = document.getElementById("drafts-btn")
 const newMailBtnEl = document.getElementById("new-mail-btn")
+const logoutBtnEl = document.getElementById("logout-btn")
 emailDisplay.innerHTML = "";
 
 const getCookie = (cookieKey) => {
@@ -65,7 +66,11 @@ function convertDate(dateInMs){
 function getShortDate(date){
     return `${(date.getDate()).toString().padStart(2,0)}/${(date.getMonth()).toString().padStart(2,0)}/${date.getFullYear()}`
 }
-
+let isLoggedIn = getCookie("is_logged_in")
+if(isLoggedIn == "False"){
+    console.log("Need to login. Redirecting...")
+    window.location.replace("http://127.0.0.1:5000/web-app/login")
+}
 let userEmailAddress = getCookie('email')
 //Removes quotes on email
 userEmailAddress = userEmailAddress.substring(1,userEmailAddress.length-1)
@@ -108,4 +113,14 @@ draftsBtnEl.addEventListener('click', function(){
 })
 newMailBtnEl.addEventListener('click', function(){
     window.location.replace("http://127.0.0.1:5000/web-app/new_mail")
+})
+logoutBtnEl.addEventListener('click', function(){
+    fetch("http://127.0.0.1:5000/exp-api/logout")
+        .then(response => {
+            if(response.ok){
+                console.log(response.json())
+            }
+            window.location.replace("http://127.0.0.1:5000/web-app/login")
+        })
+
 })
