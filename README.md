@@ -5,10 +5,10 @@ Design:
 database (csv for now) - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
--Implement sent emails display AND get buttons to work so you can switch between the two
-Consider using a variable to keep track of the viewing mode (i.e. "inbox", "sent" or "drafts")
+-Change dashboard to inbox page- have login direct user to this pagesent emails display AND get sidebar button to work
 
 *Remaining tasks:*
+-Implement sent and draft pages AND get buttons to work so you can switch between the two
 -Implement draft emails display (not read)
 -Implement log out (remember to update/remove cookies- see expapi in ewa_server)
 -Implement read emails

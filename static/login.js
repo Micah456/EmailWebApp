@@ -35,7 +35,7 @@ function login(email,password){
         .then(response => {
             if(response.ok){
                 console.log("Success!")
-                window.location.replace("http://127.0.0.1:5000/web-app/dashboard")
+                window.location.replace("http://127.0.0.1:5000/web-app/inbox")
             }
             else{
                 errorMessageEl.textContent = "Email or password is incorrect."

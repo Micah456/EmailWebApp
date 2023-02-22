@@ -1,5 +1,11 @@
 const emailDisplay = document.getElementById('email-display')
 const currentUserEl = document.getElementById("current-user")
+const inboxBtnEl = document.getElementById("inbox-btn")
+const sentBtnEl = document.getElementById("sent-btn")
+const draftsBtnEl = document.getElementById("drafts-btn")
+const newMailBtnEl = document.getElementById("new-mail-btn")
+emailDisplay.innerHTML = "";
+
 const getCookie = (cookieKey) => {
   let cookieName = `${cookieKey}=`;
 
@@ -16,19 +22,9 @@ const getCookie = (cookieKey) => {
       }
   }
 }
-let exampleEmail = {
-        "ID": 1,
-        "Subject": "RE: First Email",
-        "Date Sent": "20/02/2023 23:21:52",
-        "Message": "Hey sis!",
-        "From Email": "duanevaughn@hotmail.com",
-        "From Name": "Duane Vaughn",
-        "To Email": "marleevaughn@outlook.com",
-        "To Name": "Marlee Vaughn",
-        "Draft": false
-}
-emailDisplay.innerHTML = "";
-let examples = [exampleEmail, exampleEmail]
+
+
+
 function getEmailHTML(emailData){
     let fromInitials = emailData['From Name'].split(" ")
     fromInitials = fromInitials[0][0] + fromInitials[1][0]
@@ -58,30 +54,8 @@ function displayAllEmails(emailArray){
     emailDisplay.innerHTML = emailDisplayHTML
 }
 
-let userEmailAddress = getCookie('email')
-userEmailAddress = userEmailAddress.substring(1,userEmailAddress.length-1)
-let userDetails = null
-let inboxEmails = []
-let sentEmails = []
-fetch(`http://127.0.0.1:5000/exp-api/load_dashboard?email=${userEmailAddress}`)
-    .then(response => response.json())
-    .then(data => {
-        //console.log(data)
-        userDetails = data['User Details']
-        inboxEmails = data['User Emails']['Inbox Emails']
-        sentEmails = data['User Emails']['Sent Emails']
-        setDashBoardData()
-    })
-currentUserEl.textContent = `Welcome: ${userEmailAddress}`
-//Add code to exp api etc to extract emails- I want it to return an object containing two objects
-//1st points to array of inbox emails(to user)
-//2nd points to array of sent emails (from user)
-//Add INBOX emails to inboxEmails
-//Then run displayAllEmails for the INBOX emails for this page
-
-//displayAllEmails(inboxEmails) //Change to inboxEmails once above api feature created
-function setDashBoardData(){
-    displayAllEmails(inboxEmails)
+function setDashBoardData(emailArray){
+    displayAllEmails(emailArray)
 }
 
 function convertDate(dateInMs){
@@ -91,3 +65,47 @@ function convertDate(dateInMs){
 function getShortDate(date){
     return `${(date.getDate()).toString().padStart(2,0)}/${(date.getMonth()).toString().padStart(2,0)}/${date.getFullYear()}`
 }
+
+let userEmailAddress = getCookie('email')
+//Removes quotes on email
+userEmailAddress = userEmailAddress.substring(1,userEmailAddress.length-1)
+currentUserEl.textContent = `Welcome: ${userEmailAddress}`
+//Get view of page (e.g. inbox, sent, etc.)
+let view = window.location.href
+indexOfPage = view.lastIndexOf("/")
+view = view.substring(indexOfPage+1)
+console.log(`View: ${view}`)
+let userDetails = null
+let inboxEmails = []
+let sentEmails = []
+fetch(`http://127.0.0.1:5000/exp-api/load_dashboard?email=${userEmailAddress}`)
+    .then(response => response.json())
+    .then(data => {
+        //console.log(data)
+        userDetails = data['User Details']
+        switch(view) {
+            case "inbox":
+                setDashBoardData(data['User Emails']['Inbox Emails'])
+                break
+            case "sent":
+                setDashBoardData(data['User Emails']['Sent Emails'])
+                break
+            default: // drafts
+                setDashBoardData(data['User Emails']['Draft Emails'])
+                break
+        }
+
+    })
+
+inboxBtnEl.addEventListener('click', function(){
+    window.location.replace("http://127.0.0.1:5000/web-app/inbox")
+})
+sentBtnEl.addEventListener('click', function(){
+    window.location.replace("http://127.0.0.1:5000/web-app/sent")
+})
+draftsBtnEl.addEventListener('click', function(){
+    window.location.replace("http://127.0.0.1:5000/web-app/drafts")
+})
+newMailBtnEl.addEventListener('click', function(){
+    window.location.replace("http://127.0.0.1:5000/web-app/new_mail")
+})
