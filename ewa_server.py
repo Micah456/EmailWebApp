@@ -25,9 +25,9 @@ def server_error(details="No details"):
 def load_login_page():
     return render_template("login.html")
 
-@app.route("/web-app/dashboard")
+@app.route("/web-app/inbox")
 def load_dashboard_page():
-    return render_template("dashboard.html")
+    return render_template("inbox.html")
 
 # Sys API
 # GET Requests

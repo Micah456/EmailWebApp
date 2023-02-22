@@ -54,16 +54,22 @@ def load_user_emails(userid, user_email_address):
     #Filter emails
     inbox_list = []
     sent_list = []
+    drafs_list = []
     for i in range(len(email_dict)):
         found_email = email_dict[str(i)]
         if found_email['From Email'] == user_email_address:
-            #sent email
-            sent_list.append(found_email)
+            #sent email and drafts
+            if found_email['Draft']:
+                #Draft emails
+                drafs_list.append(found_email)
+            else:
+                #Sent emails
+                sent_list.append(found_email)
         elif found_email['To Email'] == user_email_address and not(found_email['Draft']):
             #inbox email
             inbox_list.append(found_email)
-    #Return object containing both lists
-    user_email_dict = {"Inbox Emails" : inbox_list,"Sent Emails" : sent_list}
+    #Return object containing all lists
+    user_email_dict = {"Inbox Emails" : inbox_list,"Sent Emails" : sent_list, "Draft Emails" : drafs_list}
     user_emails = json.dumps(user_email_dict)
     return user_emails
 

@@ -5,8 +5,7 @@ Design:
 database (csv for now) - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
--Implement sent emails display AND get buttons to work so you can switch between the two
-Consider using a variable to keep track of the viewing mode (i.e. "inbox", "sent" or "drafts")
+-Implement sent and draft pages AND get buttons to work so you can switch between the two
 
 *Remaining tasks:*
 -Implement draft emails display (not read)
@@ -19,6 +18,7 @@ Consider using a variable to keep track of the viewing mode (i.e. "inbox", "sent
 -Refactor
 
 *Previous tasks:*
+-Change dashboard to inbox page- have login direct user to this pagesent emails display AND get sidebar button to work - DONE
 Load emails into dashboard and set resulting inbox array - DONE
 -Load user details to dashboard - DONE
 -Build login page and implement login using front end, exp api and sys api - DONE
