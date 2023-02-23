@@ -42,9 +42,13 @@ def load_drafts_page():
 @app.route("/web-app/drafts/<emailid>")
 def load_read_email(emailid):
     if request.args.get("edit") == "True":
-        return server_error("Feature has not yet been implemented! Come back later!")
+        return render_template("writeemail.html")
     else:
         return render_template("reademail.html")
+
+@app.route("/web-app/new_mail")
+def write_email():
+    return render_template("writeemail.html")
 
 # Sys API
 # GET Requests
@@ -97,7 +101,10 @@ def email_id(emailid):
 #POST Requests
 @app.route("/sys-api/emails", methods=["POST"])
 def create_email():
-    if ewa_sysapi_func.create_email(request.json) == False:
+    email = request.json
+    if type(email) == str:
+        email = json.loads(email)
+    if ewa_sysapi_func.create_email(email) == False:
         #NOTE: request.json is dict object
         return server_error()
     msg_json = json.dumps({"Message" : "Email created"})
@@ -114,13 +121,16 @@ def create_user():
 #PUT Requests
 @app.route("/sys-api/emails/<emailid>", methods=["PUT"])
 def update_email(emailid):
+    email = request.json
+    if type(email) == str:
+        email = json.loads(email)
     try:
         int(emailid)
     except Exception as e:
         #if emailid cannot be parsed to int
         print(e)
         return bad_request("Emailid must be int.")
-    if ewa_sysapi_func.update_email(request.json, emailid) == False:
+    if ewa_sysapi_func.update_email(email, emailid) == False:
         #NOTE: request.json is dict object
         return server_error()
     msg_json = json.dumps({"Message" : "Email updated"})
@@ -182,7 +192,21 @@ def validate():
         msg_json = json.dumps({"Message":"Login not validated"})
         return Response(msg_json, mimetype='application/json', status=401)
     
-
+@app.route("/pro-api/save_email", methods=["POST","PUT"])
+def save_email_proapi():
+    initial_email = request.json
+    if type(initial_email) == str:
+        initial_email = json.loads(initial_email)
+    #print("PRO API: json.loads(initial_email) type: ", type(json.loads(initial_email)))
+    #rint("PRO API: initial_email type: ", type(initial_email))
+    success = ewa_proapi_func.save_email(initial_email, request.method)
+    if success:
+        msg_json = json.dumps({"Message":"Email created/updated successfully!"})
+        resp = Response(msg_json, mimetype='application/json', status=200)
+    else:
+        msg_json = json.dumps({"Message":"Email not created/updated"})
+        resp = Response(msg_json, mimetype='application/json', status=500)
+    return resp
 
 #ExpAPI
 #GET Requests
@@ -236,6 +260,29 @@ def login():
         msg_json = json.dumps({"Message":"Login unsuccessful"})
         resp = Response(msg_json, mimetype='application/json', status=401)
     return resp
+
+@app.route("/exp-api/save_email", methods=["POST", "PUT"])
+def save_email_expapi():
+    initial_email = request.json
+    print("EXP API: initial_email type: ", type(initial_email))
+    if(request.method == "POST"):
+        #New Email
+        if ewa_expapi_func.save_new_email(initial_email):
+            msg_json = json.dumps({"Message":"Email created and saved"})
+            resp = Response(msg_json, mimetype='application/json', status=201)
+        else:
+            msg_json = json.dumps({"Message":"Email not created"})
+            resp = Response(msg_json, mimetype='application/json', status=500)
+    else:
+        #Updating draft
+        if ewa_expapi_func.update_draft(initial_email):
+            msg_json = json.dumps({"Message":"Draft updated and saved"})
+            resp = Response(msg_json, mimetype='application/json', status=200)
+        else:
+            msg_json = json.dumps({"Message":"Draft not updated"})
+            resp = Response(msg_json, mimetype='application/json', status=500)
+    return resp
+
 
 #TESTAPI
 

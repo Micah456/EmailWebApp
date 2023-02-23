@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+    <head>
+        <title id="page-title">Write/Edit Email</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../../static/writeemail.css">
+    </head>
+    <body>
+        <center><main>
+            <div class="header">
+                <p id="current-user" class="current-user">Welcome: User</p>
+                <button id="logout-btn">Log out</button>
+                <button id="settings-btn">Settings</button>
+            </div>
+            <div class="title-bar">
+                <h1 id="h1-page-title" class="title">Write/Edit Email</h1>
+            </div>
+            <div class="container">
+                <div id="sidebar" class="sidebar">
+                    <button id='inbox-btn' class='sidebar-btn'>Inbox</button>
+                    <button id='drafts-btn' class='sidebar-btn'>Drafts</button>
+                    <button id='sent-btn' class='sidebar-btn'>Sent</button>
+                    <button id='new-mail-btn' class='sidebar-btn'>New Mail</button>
+                </div>
+                <div class="email-display">
+                    <div id="email-canvas" class="email-canvas">
+                        <div class="email-input-container">
+                            <label class="email-label">To: </label>
+                            <input type="email" id="to-email-input" class="email-input">
+                        </div>
+                        <div class="email-input-container">
+                            <label class="email-label">Subject: </label>
+                            <input id="subject-input" class="email-input">
+                        </div>
+                        <textarea id="message-input"></textarea>
+                        <p id="error-message"><span class="red-font">Please enter the email message</span></p>
+                    </div>
+                    <div class="email-action-container">
+                        <button id='cancel-btn' class='email-btn'>Cancel</button>
+                        <button id='save-btn' class='email-btn'>Save Draft</button>
+                        <button id='send-btn' class='email-btn'>Send</button>
+                    </div>
+                </div>
+            </div>
+        </main></center>
+        <script src="../../static/writeemail.js"></script>
+    </body>
+</html>

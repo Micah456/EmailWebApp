@@ -36,7 +36,7 @@ def get_emails():
         return None
 
 def get_email_by_id(id):
-    emails_df = pd.read_excel("data/emailCollection.xlsx")
+    emails_df = pd.read_excel("data/emailCollection.xlsx", sheet_name='Sheet1')
     print("--------------------")
     print(emails_df)
     try:
@@ -50,12 +50,13 @@ def get_email_by_id(id):
     return email_data_json
 
 def create_email(email_dict):
+    print("ewa_sysapi_func.py: email_dict type: ", type(email_dict))
     try:
         print("ewa_sysapi_func.py: creating email\n------------------")
         emails_df = pd.read_excel("data/emailCollection.xlsx")
-        #print(emails_df)
+        print(emails_df)
         new_id = len(emails_df.index)
-        #print("New email's id: ", new_id)
+        print("New email's id: ", new_id)
         new_row = pd.DataFrame(email_dict, index=['0'])
         new_row['ID'] = new_id
         new_row['Date Sent'] = pd.to_datetime(new_row['Date Sent'])

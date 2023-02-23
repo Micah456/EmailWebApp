@@ -94,3 +94,37 @@ def get_dashboard(email):
     dashboard_dict = {"User Details" : user_dict, "User Emails" : user_emails_dict}
     return json.dumps(dashboard_dict)
 
+def save_email(email_dict, methodType):
+    #Check if email has recipient email
+    print(email_dict)
+    if not(email_dict["To Email"] == "{No Recipient Email}") or not(email_dict["Draft"]):
+        #Validate toEmail and load recipient details
+        try:
+            recipient_dict = json.loads(load_user(email_dict["To Email"]))
+        except:
+            return None
+        #Get and set recipient name
+        recipient_name = recipient_dict["First Name"] + " " + recipient_dict["Last Name"]
+        email_dict['To Name'] = recipient_name
+    #If email is NEW - Set email ID
+    if methodType == "POST":
+        #Get ALL emails on db
+        resp = requests.get("http://127.0.0.1:5000/sys-api/emails")
+        emails_dict = resp.json()
+        #Set emailid to count of emails on db
+        email_ID = len(emails_dict)
+        email_dict['ID'] = email_ID
+    print(email_dict)
+    #return json.dumps(email_dict)
+    #Send email to sys api
+    if methodType == "POST":
+        resp = requests.post("http://127.0.0.1:5000/sys-api/emails", json=json.dumps(email_dict))
+    else:
+        #PUT
+        url = "http://127.0.0.1:5000/sys-api/emails/" + str(email_dict['ID'])
+        resp = requests.put(url, json=json.dumps(email_dict))
+    if resp.ok:
+        return True
+    else:
+        return False
+

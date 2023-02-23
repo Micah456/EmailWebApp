@@ -5,16 +5,23 @@ Design:
 database (csv for now) - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
--Implement write emails
+-Fix the following problems:
+1. Convert all dates in emailCollection.xlsx to milliseconds
+2. Update sys api create email and update draft so that it does NOT convert date (should remain in milliseconds)
+3. Change writeemail.js so that when sending NEW email (not updating draft) it does NOT include ID
+
 
 *Remaining tasks:*
--Implement edit drafts
+-Implement edit button
+-Add warning dialogue if closing/going to different page without saving/sending
+-Remove edit button from inbox and sent reademails
 -Implement send emails (including creating drafts)
 -Implement update user details
--Implement create new user
+-Implement create new user - sys api might read dict as string, put if clause that converts to dict (json.loads) if this happens
 -Refactor
 
 *Previous tasks:*
+-Implement write emails and edit drafts
 -Implement clicking of emails on dashboard to load reademail.html with appropriate email - DONE
 -Implement reademail.html page including rendering emails from rest api requests - DONE
 -Implement log out (remember to update/remove cookies- see expapi in ewa_server) - DONE

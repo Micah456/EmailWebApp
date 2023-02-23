@@ -36,3 +36,19 @@ def load_user_dashboard(email):
         return json.dumps(dashboard_dict)
     else:
         return None
+
+def save_new_email(email_dict):
+    print("ewa_expapi_func.py: type of email_dict", type(email_dict))
+    print("ewa_expapi_func.py: type of json.dumps(email_dict)", type(json.dumps(email_dict)))
+    resp = requests.post("http://127.0.0.1:5000/pro-api/save_email", json=json.dumps(email_dict))
+    if resp.ok:
+        return True
+    else:
+        return None
+
+def update_draft(email_dict):
+    resp = requests.put("http://127.0.0.1:5000/pro-api/save_email", json=json.dumps(email_dict))
+    if resp.ok:
+        return True
+    else:
+        return None
