@@ -157,3 +157,6 @@ h1.title{
 #date-sent,#to-email{
     font-size: .7rem;
 }
+.red-font{
+    color: red;
+}

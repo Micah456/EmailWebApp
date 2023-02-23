@@ -5,17 +5,17 @@ Design:
 database (csv for now) - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
--Implement clicking of emails on dashboard to load reademail.html with appropriate email.
-Note the format of request must be: "/web-app/drafts/emailid" - consider making email-tile id include the email id number and then use onclick method to return the id, get emailid from that, and then use that to make the request.
+-Implement write emails
 
 *Remaining tasks:*
--Implement write emails
+-Implement edit drafts
 -Implement send emails (including creating drafts)
 -Implement update user details
 -Implement create new user
 -Refactor
 
 *Previous tasks:*
+-Implement clicking of emails on dashboard to load reademail.html with appropriate email - DONE
 -Implement reademail.html page including rendering emails from rest api requests - DONE
 -Implement log out (remember to update/remove cookies- see expapi in ewa_server) - DONE
 -Implement sent and draft pages AND get buttons to work so you can switch between the two - DONE

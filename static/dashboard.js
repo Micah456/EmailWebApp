@@ -31,8 +31,11 @@ function getEmailHTML(emailData){
     fromInitials = fromInitials[0][0] + fromInitials[1][0]
     let dateSent = convertDate(emailData['Date Sent'])
     dateSent = getShortDate(dateSent)
+    if(view == "drafts"){
+        dateSent = `<span class="red-font">Draft</span>`
+    }
     let emailHTML = `
-        <div class="email-tile">
+        <div class="email-tile" onclick="loadEmail(${emailData['ID']})">
             <div class="email-sub-tile">
                 <div id="from-user-icon" class="from-user-icon"><span>${fromInitials}</span>
                 </div>
@@ -66,6 +69,12 @@ function convertDate(dateInMs){
 function getShortDate(date){
     return `${(date.getDate()).toString().padStart(2,0)}/${(date.getMonth()).toString().padStart(2,0)}/${date.getFullYear()}`
 }
+
+function loadEmail(id){
+    console.log(id)
+    window.location.replace(`http://127.0.0.1:5000/web-app/${view}/${id}`)
+}
+
 let isLoggedIn = getCookie("is_logged_in")
 if(isLoggedIn == "False"){
     console.log("Need to login. Redirecting...")

@@ -44,6 +44,9 @@ function getEmailHTML(emailData){
     fromInitials = fromInitials[0][0] + fromInitials[1][0]
     let dateSent = convertDate(emailData['Date Sent'])
     dateSent = getLongDate(dateSent)
+    if(view == "drafts"){
+        dateSent = `<span class="red-font">Draft</span>`
+    }
     let emailHTML = `
     <div class="email-header">
         <h2>${emailData['Subject']}</h2>
