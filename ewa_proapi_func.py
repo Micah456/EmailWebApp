@@ -106,14 +106,6 @@ def save_email(email_dict, methodType):
         #Get and set recipient name
         recipient_name = recipient_dict["First Name"] + " " + recipient_dict["Last Name"]
         email_dict['To Name'] = recipient_name
-    #If email is NEW - Set email ID
-    if methodType == "POST":
-        #Get ALL emails on db
-        resp = requests.get("http://127.0.0.1:5000/sys-api/emails")
-        emails_dict = resp.json()
-        #Set emailid to count of emails on db
-        email_ID = len(emails_dict)
-        email_dict['ID'] = email_ID
     print(email_dict)
     #return json.dumps(email_dict)
     #Send email to sys api

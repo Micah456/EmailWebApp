@@ -50,6 +50,9 @@ function getEmailDetails(isDraft){
         "To Name": "{No Recipient Name}",
         "Draft": isDraft
     }
+    if(emailData.ID == -1){//new emails should not be sent with an ID
+        delete emailData.ID
+    }
     return emailData
     //Make sure to handle if email exists or not then fill in name from there. If toemail is {No Recipient Email} - API should ignore this
 }
