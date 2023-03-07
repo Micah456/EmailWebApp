@@ -60,7 +60,39 @@ function getEmailDetails(isDraft){
 function sendEmail(isDraft){
     console.log(subjectInputEl.value)
     if(messageInputEl.value){
-        console.log(getEmailDetails(isDraft))
+        let emailToSend = getEmailDetails(isDraft)
+        console.log(emailToSend)
+        let mymethod = ""
+        if(view){//If updating draft (view only set if email is draft)
+            mymethod = "put"
+        }
+        else{//Sending NEW mail
+            mymethod = "post"
+        }
+        fetch("http://127.0.0.1:5000/exp-api/save_email", {
+        method: mymethod,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        //make sure to serialize your JSON body
+        body: JSON.stringify(emailToSend)
+        })
+        .then(response => {
+            if(response.ok){
+                console.log("Success!")
+                if(view){
+                    window.location.replace("http://127.0.0.1:5000/web-app/" + view)
+                }
+                else{
+                    window.location.replace("http://127.0.0.1:5000/web-app/inbox")
+                }
+                
+            }
+            else{
+                alert("Error: email not sent/saved: " + response.statusText)
+            }
+        })
     }
     else{
         errorMessageEl.style.display = "block"

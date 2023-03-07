@@ -5,14 +5,12 @@ Design:
 database (csv for now) - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
--Fix the following problems:
-1. Fix sending/updating emails
-2. Fix broken button css animation
+-Implement edit button
 
 
 *Remaining tasks:*
+-Add button animation and css clickable curser icon
 -Redirect when sending emails/saving drafts
--Implement edit button
 -Add warning dialogue if closing/going to different page without saving/sending
 -Remove edit button from inbox and sent reademails
 -Implement send emails (including creating drafts)
@@ -21,11 +19,12 @@ database (csv for now) - sysapi - processapi - expapi - html/css/js
 -Refactor
 
 *Previous tasks:*
--Fixed bug- login redirects to non-existent dashboard instead of inbox
--Fixed writeemail.js so that sending new emails does not include ID
--Fixed update email date sent bug in sys-api
--Fixed create email bug that sets date to 1970 in new emails in sys-api
--Implement write emails and edit drafts
+-Implement sending/updating emails on js side - DONE
+-Fixed bug- login redirects to non-existent dashboard instead of inbox - DONE
+-Fixed writeemail.js so that sending new emails does not include ID - DONE
+-Fixed update email date sent bug in sys-api - DONE
+-Fixed create email bug that sets date to 1970 in new emails in sys-api - DONE
+-Implement write emails and edit drafts - DONE
 -Implement clicking of emails on dashboard to load reademail.html with appropriate email - DONE
 -Implement reademail.html page including rendering emails from rest api requests - DONE
 -Implement log out (remember to update/remove cookies- see expapi in ewa_server) - DONE
