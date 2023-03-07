@@ -6,10 +6,12 @@ database (csv for now) - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
 -Fix the following problems:
-1. Change writeemail.js so that when sending NEW email (not updating draft) it does NOT include ID
+1. Fix sending/updating emails
+2. Fix broken button css animation
 
 
 *Remaining tasks:*
+-Redirect when sending emails/saving drafts
 -Implement edit button
 -Add warning dialogue if closing/going to different page without saving/sending
 -Remove edit button from inbox and sent reademails
@@ -19,6 +21,8 @@ database (csv for now) - sysapi - processapi - expapi - html/css/js
 -Refactor
 
 *Previous tasks:*
+-Fixed bug- login redirects to non-existent dashboard instead of inbox
+-Fixed writeemail.js so that sending new emails does not include ID
 -Fixed update email date sent bug in sys-api
 -Fixed create email bug that sets date to 1970 in new emails in sys-api
 -Implement write emails and edit drafts

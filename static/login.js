@@ -64,5 +64,5 @@ const getCookie = (cookieKey) => {
 let isLoggedIn = getCookie("is_logged_in")
 if(isLoggedIn == "True"){
     console.log("Already logged in: redirecting...")
-    window.location.replace("http://127.0.0.1:5000/web-app/dashboard")
+    window.location.replace("http://127.0.0.1:5000/web-app/inbox")
 }
