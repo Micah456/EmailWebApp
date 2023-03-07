@@ -30,8 +30,14 @@ button{
     border-radius: 7px;
     font-size: 1.5rem;
     color: white;
-    padding: .5rem 1rem
+    padding: .5rem 1rem;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
 }
+button:hover{
+    transform: scale(1.03); 
+}
+
 .login-input{
     background: #03213d;
     border-radius: 7px;;
@@ -159,4 +165,7 @@ h1.title{
 }
 .red-font{
     color: red;
+}
+.disabled{
+    display: none;
 }

@@ -5,20 +5,19 @@ Design:
 database (csv for now) - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
--Implement edit button
+-Add warning dialogue if closing/going to different page without saving/sending
 
 
 *Remaining tasks:*
--Add button animation and css clickable curser icon
--Redirect when sending emails/saving drafts
--Add warning dialogue if closing/going to different page without saving/sending
--Remove edit button from inbox and sent reademails
--Implement send emails (including creating drafts)
 -Implement update user details
 -Implement create new user - sys api might read dict as string, put if clause that converts to dict (json.loads) if this happens
 -Refactor
 
 *Previous tasks:*
+-Remove edit button from inbox and sent reademails - DONE
+-Add button animation and css clickable curser icon - DONE
+-Implement edit button - DONE
+-Redirect when sending emails/saving drafts - DONE
 -Implement sending/updating emails on js side - DONE
 -Fixed bug- login redirects to non-existent dashboard instead of inbox - DONE
 -Fixed writeemail.js so that sending new emails does not include ID - DONE

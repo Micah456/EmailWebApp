@@ -8,6 +8,8 @@ const newMailBtnEl = document.getElementById("new-mail-btn")
 const logoutBtnEl = document.getElementById("logout-btn")
 const pageTitle = document.getElementById("page-title")
 const h1PageTitleEl = document.getElementById("h1-page-title")
+const editBtnEl = document.getElementById("edit-btn")
+const deleteBtnEl = document.getElementById("delete-btn")
 
 const getCookie = (cookieKey) => {
     let cookieName = `${cookieKey}=`;
@@ -115,12 +117,15 @@ fetch(`http://127.0.0.1:5000/exp-api/load_dashboard?email=${userEmailAddress}`)
         switch(view) {
             case "inbox":
                 emailArray = data['User Emails']['Inbox Emails']
+                editBtnEl.classList.add("disabled")
                 break
             case "sent":
                 emailArray = data['User Emails']['Sent Emails']
+                editBtnEl.classList.add("disabled")
                 break
             default: // drafts
                 emailArray = data['User Emails']['Draft Emails']
+                editBtnEl.classList.remove("disabled")
                 break
             
         }
@@ -154,4 +159,12 @@ logoutBtnEl.addEventListener('click', function(){
             window.location.replace("http://127.0.0.1:5000/web-app/login")
         })
 
+})
+editBtnEl.addEventListener('click', function(){
+    if(view == "drafts"){
+        window.location.replace(pageURL + "?edit=True")
+    }
+})
+deleteBtnEl.addEventListener('click', function(){
+    
 })
