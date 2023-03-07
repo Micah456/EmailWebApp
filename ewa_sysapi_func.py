@@ -1,5 +1,6 @@
 import json
 import pandas as pd
+import datetime as dt
 
 def get_user_list():
     try:
@@ -59,7 +60,7 @@ def create_email(email_dict):
         print("New email's id: ", new_id)
         new_row = pd.DataFrame(email_dict, index=['0'])
         new_row['ID'] = new_id
-        new_row['Date Sent'] = pd.to_datetime(new_row['Date Sent'])
+        new_row['Date Sent'] = dt.datetime.fromtimestamp(new_row['Date Sent']/1000)
         print(new_row)
         new_emails_df = pd.concat([emails_df, new_row])
         new_emails_df = new_emails_df.set_index("ID")
@@ -99,6 +100,7 @@ def update_email(email_dict, emailid):
         emails_df = pd.read_excel("data/emailCollection.xlsx")
         #print(emails_df)
         replace_row = pd.DataFrame(email_dict, index=['0'])
+        replace_row['Date Sent'] = dt.datetime.fromtimestamp(replace_row['Date Sent']/1000)
         #print(replace_row)
         num_col = len(emails_df.columns)
         for i in range(num_col):

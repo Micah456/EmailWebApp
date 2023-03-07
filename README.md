@@ -6,9 +6,7 @@ database (csv for now) - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
 -Fix the following problems:
-1. Convert all dates in emailCollection.xlsx to milliseconds
-2. Update sys api create email and update draft so that it does NOT convert date (should remain in milliseconds)
-3. Change writeemail.js so that when sending NEW email (not updating draft) it does NOT include ID
+1. Change writeemail.js so that when sending NEW email (not updating draft) it does NOT include ID
 
 
 *Remaining tasks:*
@@ -21,6 +19,8 @@ database (csv for now) - sysapi - processapi - expapi - html/css/js
 -Refactor
 
 *Previous tasks:*
+-Fixed update email date sent bug in sys-api
+-Fixed create email bug that sets date to 1970 in new emails in sys-api
 -Implement write emails and edit drafts
 -Implement clicking of emails on dashboard to load reademail.html with appropriate email - DONE
 -Implement reademail.html page including rendering emails from rest api requests - DONE
