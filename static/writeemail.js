@@ -179,26 +179,63 @@ sendBtnEl.addEventListener('click', function(){
     sendEmail(false)
 })
 
+function confirmLogout(func){
+    console.log("Email empty: " + isEmptyEmail())
+    if(isEmptyEmail()){
+        func()
+    }
+    else{
+        let cont = confirm("Do you want to leave? (Your email will not be saved)");
+        if (cont) {
+            func()
+        } else {
+            console.log("Not leaving page")
+        } 
+    }
+    
+}
+
+function confirmExit(targetUrl) {
+    console.log("Email empty: " + isEmptyEmail())
+    if(isEmptyEmail()){
+        window.location.replace(targetUrl)
+    }
+    else{
+        let cont = confirm("Do you want to leave? (Your email will not be saved)");
+        if (cont) {
+            console.log("Leaving page!")
+            window.location.replace(targetUrl)
+        } else {
+            console.log("Not leaving page")
+        }
+    }
+    
+}
+function isEmptyEmail(){
+    if(toEmailInputEl.value || subjectInputEl.value || messageInputEl.value) return false
+    else return true
+}
 
 inboxBtnEl.addEventListener('click', function(){
-    window.location.replace("http://127.0.0.1:5000/web-app/inbox")
+    confirmExit("http://127.0.0.1:5000/web-app/inbox")
 })
 sentBtnEl.addEventListener('click', function(){
-    window.location.replace("http://127.0.0.1:5000/web-app/sent")
+    confirmExit("http://127.0.0.1:5000/web-app/sent")
 })
 draftsBtnEl.addEventListener('click', function(){
-    window.location.replace("http://127.0.0.1:5000/web-app/drafts")
+    confirmExit("http://127.0.0.1:5000/web-app/drafts")
 })
 newMailBtnEl.addEventListener('click', function(){
-    window.location.replace("http://127.0.0.1:5000/web-app/new_mail")
+    confirmExit("http://127.0.0.1:5000/web-app/new_mail")
 })
 logoutBtnEl.addEventListener('click', function(){
-    fetch("http://127.0.0.1:5000/exp-api/logout")
+    confirmLogout(function(){
+        fetch("http://127.0.0.1:5000/exp-api/logout")
         .then(response => {
             if(response.ok){
                 console.log(response.json())
             }
             window.location.replace("http://127.0.0.1:5000/web-app/login")
         })
-
+    })
 })

@@ -5,7 +5,7 @@ Design:
 database (csv for now) - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
--Add warning dialogue if closing/going to different page without saving/sending
+-Implement Open Settings
 
 
 *Remaining tasks:*
@@ -14,6 +14,7 @@ database (csv for now) - sysapi - processapi - expapi - html/css/js
 -Refactor
 
 *Previous tasks:*
+-Add warning dialogue if closing/going to different page without saving/sending - DONE
 -Remove edit button from inbox and sent reademails - DONE
 -Add button animation and css clickable curser icon - DONE
 -Implement edit button - DONE
