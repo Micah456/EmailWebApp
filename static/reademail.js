@@ -10,6 +10,10 @@ const pageTitle = document.getElementById("page-title")
 const h1PageTitleEl = document.getElementById("h1-page-title")
 const editBtnEl = document.getElementById("edit-btn")
 const deleteBtnEl = document.getElementById("delete-btn")
+const settingsBtnEl = document.getElementById("settings-btn")
+const closeSettingsBtnEl = document.getElementById("close-settings-btn")
+const slideSidebarEl = document.getElementById("slide-sidebar")
+
 
 const getCookie = (cookieKey) => {
     let cookieName = `${cookieKey}=`;
@@ -167,4 +171,14 @@ editBtnEl.addEventListener('click', function(){
 })
 deleteBtnEl.addEventListener('click', function(){
     
+})
+settingsBtnEl.addEventListener('click', function(){
+    slideSidebarEl.classList.remove("slide-sidebar-closed")
+    slideSidebarEl.classList.add("slide-sidebar-open")
+    console.log("open!")
+})
+closeSettingsBtnEl.addEventListener('click', function(){
+    slideSidebarEl.classList.remove("slide-sidebar-open")
+    slideSidebarEl.classList.add("slide-sidebar-closed")
+    console.log("closed!")
 })

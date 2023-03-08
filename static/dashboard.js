@@ -5,6 +5,9 @@ const sentBtnEl = document.getElementById("sent-btn")
 const draftsBtnEl = document.getElementById("drafts-btn")
 const newMailBtnEl = document.getElementById("new-mail-btn")
 const logoutBtnEl = document.getElementById("logout-btn")
+const settingsBtnEl = document.getElementById("settings-btn")
+const closeSettingsBtnEl = document.getElementById("close-settings-btn")
+const slideSidebarEl = document.getElementById("slide-sidebar")
 emailDisplay.innerHTML = "";
 
 const getCookie = (cookieKey) => {
@@ -132,4 +135,14 @@ logoutBtnEl.addEventListener('click', function(){
             window.location.replace("http://127.0.0.1:5000/web-app/login")
         })
 
+})
+settingsBtnEl.addEventListener('click', function(){
+    slideSidebarEl.classList.remove("slide-sidebar-closed")
+    slideSidebarEl.classList.add("slide-sidebar-open")
+    console.log("open!")
+})
+closeSettingsBtnEl.addEventListener('click', function(){
+    slideSidebarEl.classList.remove("slide-sidebar-open")
+    slideSidebarEl.classList.add("slide-sidebar-closed")
+    console.log("closed!")
 })

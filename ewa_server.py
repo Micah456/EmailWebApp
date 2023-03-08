@@ -1,4 +1,4 @@
-from flask import Flask, Response, request, render_template
+from flask import Flask, Response, request, render_template, send_file
 import ewa_sysapi_func, ewa_expapi_func, ewa_proapi_func, json
 
 app = Flask("Email Web App Server")
@@ -18,6 +18,13 @@ def server_error(details="No details"):
     error_message = {"Message" : "Server error.", "Details" : details}
     msg_json = json.dumps(error_message)
     return Response(msg_json, mimetype='application/json', status=500)
+
+# Images
+@app.route("/images/three-bars-icon.jpg")
+@app.route("/web-app/images/three-bars-icon.jpg")
+def load_bar_icon():
+    filename = "images/three-bars-icon.jpg"
+    return send_file(filename, mimetype='image/jpg')
 
 
 # Web App

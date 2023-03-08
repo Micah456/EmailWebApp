@@ -1,4 +1,3 @@
-//MAJOR BUG: need to remove ID in new emails before sent
 const currentUserEl = document.getElementById("current-user")
 const inboxBtnEl = document.getElementById("inbox-btn")
 const sentBtnEl = document.getElementById("sent-btn")
@@ -12,6 +11,9 @@ const cancelBtnEl = document.getElementById("cancel-btn")
 const saveBtnEl = document.getElementById("save-btn")
 const sendBtnEl = document.getElementById("send-btn")
 const errorMessageEl = document.getElementById("error-message")
+const settingsBtnEl = document.getElementById("settings-btn")
+const closeSettingsBtnEl = document.getElementById("close-settings-btn")
+const slideSidebarEl = document.getElementById("slide-sidebar")
 
 const getCookie = (cookieKey) => {
     let cookieName = `${cookieKey}=`;
@@ -238,4 +240,14 @@ logoutBtnEl.addEventListener('click', function(){
             window.location.replace("http://127.0.0.1:5000/web-app/login")
         })
     })
+})
+settingsBtnEl.addEventListener('click', function(){
+    slideSidebarEl.classList.remove("slide-sidebar-closed")
+    slideSidebarEl.classList.add("slide-sidebar-open")
+    console.log("open!")
+})
+closeSettingsBtnEl.addEventListener('click', function(){
+    slideSidebarEl.classList.remove("slide-sidebar-open")
+    slideSidebarEl.classList.add("slide-sidebar-closed")
+    console.log("closed!")
 })

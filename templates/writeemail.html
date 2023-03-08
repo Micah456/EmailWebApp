@@ -6,13 +6,22 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="../../static/writeemail.css">
+        <link rel="stylesheet" href="../../static/slidebar.css">
+
     </head>
     <body>
+        <div class="slide-sidebar" id="slide-sidebar">
+            <div class="slide-sidebar-header">
+                <h2>Options</h2>
+                <img id="close-settings-btn" class="three-bar-btn" src="../images/three-bars-icon.jpg" width="30rem">
+            </div>
+            <button id="change-password-btn">Change Password</button>
+            <button id="logout-btn">Log out</button>
+        </div>
         <center><main>
             <div class="header">
                 <p id="current-user" class="current-user">Welcome: User</p>
-                <button id="logout-btn">Log out</button>
-                <button id="settings-btn">Settings</button>
+                <img id="settings-btn" class="three-bar-btn" src="../images/three-bars-icon.jpg" width="30rem">
             </div>
             <div class="title-bar">
                 <h1 id="h1-page-title" class="title">Write/Edit Email</h1>

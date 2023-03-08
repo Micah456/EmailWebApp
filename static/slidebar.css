@@ -1,0 +1,53 @@
+.slide-sidebar{
+    position:fixed;
+    right: 0%;
+    top:0%;
+    width: 40vw;
+    height: 100vh;
+    margin: 0;
+    background: rgba(1,7,15, 0.75);
+    padding: 1rem 2.7rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    display: none;
+}
+@keyframes slideIn {
+    0% {
+        transform: translateX(40vw);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+@keyframes slideOut{
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(40vw);
+    }
+}
+.slide-sidebar > button{
+    width: 100%;
+    font-size: 1.2rem;
+    margin: .5rem 0;
+}
+.slide-sidebar-open{
+    display: block;
+    animation: slideIn 0.5s forwards
+}
+.slide-sidebar-closed{
+    display: block;
+    animation: slideOut 0.5s forwards
+
+}
+.slide-sidebar-header{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.three-bar-btn{
+    cursor: pointer;
+}
