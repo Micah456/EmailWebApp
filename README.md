@@ -12,6 +12,13 @@ database (csv for now) - sysapi - processapi - expapi - html/css/js
 -Implement create new user - sys api might read dict as string, put if clause that converts to dict (json.loads) if this happens
 -Refactor
 
+*Refactor tasks*
+-Connect to databases
+-Update html to use more semantic tags - e.g. nav, section, article, aside, etc
+-Update writeemail to use forms and use types/required fields etc. to validate input client side
+-Repackage common css into index.css and delete duplicate code in individual css files
+-Improve accessibility of pages
+
 *Previous tasks:*
 -Implement Open Settings (as sliding sidebar) - DONE
 -Add warning dialogue if closing/going to different page without saving/sending - DONE
