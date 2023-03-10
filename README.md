@@ -5,13 +5,10 @@ Design:
 database (csv for now) - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
--Implement cancel button on writeemail
+-Make code dry
 
-*Remaining tasks:*
--Prevent addition of commas to user details and passwords
--Refactor
-
-*Refactor tasks*
+*Remaining tasks: *Refactor tasks:*
+-Create sql db for email and user data
 -Connect to databases
 -Update html to use more semantic tags - e.g. nav, section, article, aside, etc
 -Update writeemail to use forms and use types/required fields etc. to validate input client side
@@ -19,6 +16,8 @@ database (csv for now) - sysapi - processapi - expapi - html/css/js
 -Improve accessibility of pages
 
 *Previous tasks:*
+-Prevent addition of commas to user details and passwords - DONE
+-Implement cancel button on writeemail - DONE
 -Implement create new user - DONE
 -Create newuser.html + css and initial js - DONE
 -Implement update user details - DONE

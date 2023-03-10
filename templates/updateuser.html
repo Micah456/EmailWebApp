@@ -55,11 +55,11 @@
                     </div>
                     <div class="user-property">
                         <label for="new-password">New Password:</label>
-                        <input id="new-password" type="password">
+                        <input id="new-password" type="password" minlength="5" pattern="[^,]+">
                     </div>
                     <div class="user-property">
                         <label for="repeat-password">Repeat Password:</label>
-                        <input id="repeat-password" type="password">
+                        <input id="repeat-password" type="password" minlength="5" pattern="[^,]+">
                     </div>
                     <button id="submit-password-btn">Submit</button>
                 </fieldset>

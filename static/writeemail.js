@@ -174,7 +174,12 @@ fetch(`http://127.0.0.1:5000/exp-api/load_dashboard?email=${userEmailAddress}`)
 
 
 cancelBtnEl.addEventListener('click', function(){
-    window.location.replace("http://127.0.0.1:5000/web-app/inbox")
+    if(view){
+        confirmExit("http://127.0.0.1:5000/web-app/" + view + "/" + emailID)
+    }
+    else{
+        confirmExit("http://127.0.0.1:5000/web-app/inbox")
+    }
 })
 saveBtnEl.addEventListener('click', function(){
     sendEmail(true)
@@ -189,7 +194,7 @@ function confirmLogout(func){
         func()
     }
     else{
-        let cont = confirm("Do you want to leave? (Your email will not be saved)");
+        let cont = confirm("Do you want to leave? (Your changes will not be saved)");
         if (cont) {
             func()
         } else {
@@ -205,7 +210,7 @@ function confirmExit(targetUrl) {
         window.location.replace(targetUrl)
     }
     else{
-        let cont = confirm("Do you want to leave? (Your email will not be saved)");
+        let cont = confirm("Do you want to leave? (Your changes will not be saved)");
         if (cont) {
             console.log("Leaving page!")
             window.location.replace(targetUrl)
