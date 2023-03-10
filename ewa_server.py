@@ -61,6 +61,10 @@ def write_email():
 def update_user_webapp():
     return render_template("updateuser.html")
 
+@app.route("/web-app/new-user")
+def new_user():
+    return render_template("newuser.html")
+
 # Sys API
 # GET Requests
 @app.route("/sys-api")
@@ -123,7 +127,10 @@ def create_email():
 
 @app.route("/sys-api/users", methods=["POST"])
 def create_user():
-    if ewa_sysapi_func.create_user(request.json) == False:
+    user_details = request.json
+    if type(user_details) == str:
+        user_details = json.loads(user_details)
+    if ewa_sysapi_func.create_user(user_details) == False:
         #NOTE: request.json is dict object
         return server_error()
     msg_json = json.dumps({"Message" : "User created"})
@@ -236,6 +243,20 @@ def update_user_proapi(userid):
         resp = Response(msg_json, mimetype='application/json', status=500)
     return resp
 
+@app.route("/pro-api/create-user", methods=["POST"])
+def create_user_proapi():
+    user_details = request.json
+    if type(user_details) == str:
+        user_details = json.loads(user_details)
+    success = ewa_proapi_func.create_user(user_details)
+    if success:
+        msg_json = json.dumps({"Message":"User created successfully!"})
+        resp = Response(msg_json, mimetype='application/json', status=201)
+    else:
+        msg_json = json.dumps({"Message":"User not created"})
+        resp = Response(msg_json, mimetype='application/json', status=500)
+    return resp
+
 #ExpAPI
 #GET Requests
 @app.route("/exp-api/user")
@@ -319,6 +340,17 @@ def update_user_expapi(userid):
         resp = Response(msg_json, mimetype='application/json', status=200)
     else:
         msg_json = json.dumps({"Message":"User not updated"})
+        resp = Response(msg_json, mimetype='application/json', status=500)
+    return resp
+
+@app.route("/exp-api/create-user", methods=["POST"])
+def create_user_expapi():
+    user_details = request.json
+    if ewa_expapi_func.create_user(user_details):
+        msg_json = json.dumps({"Message":"User successfully created"})
+        resp = Response(msg_json, mimetype='application/json', status=201)
+    else:
+        msg_json = json.dumps({"Message":"User not created"})
         resp = Response(msg_json, mimetype='application/json', status=500)
     return resp
 

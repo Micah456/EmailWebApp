@@ -57,3 +57,7 @@ def update_user(userid, user_details):
     url = "http://127.0.0.1:5000/pro-api/update-user/" + str(userid)
     resp = requests.put(url, json=json.dumps(user_details))
     return resp.ok
+
+def create_user(user_details):
+    resp = requests.post("http://127.0.0.1:5000/pro-api/create-user", json=json.dumps(user_details))
+    return resp.ok

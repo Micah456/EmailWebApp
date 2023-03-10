@@ -129,3 +129,22 @@ def update_user(userid, user_details):
         return True
     else:
         return False
+    
+def create_user(user_details):
+    #Check user doesn't exist
+    #Get all users
+    resp = requests.get("http://127.0.0.1:5000/sys-api/users")
+    user_dict = resp.json()
+    #Get user email
+    email = user_details['Email Address']
+    #Check if email address matches
+    for i in range(len(user_dict)):
+        found_user = user_dict[str(i)]
+        found_email_address = found_user['Email Address']
+        print(found_email_address)
+        if found_email_address == email:
+            #if match return false
+            return False
+    #else (if match not found) send user to sys api
+    resp = requests.post("http://127.0.0.1:5000/sys-api/users", json=json.dumps(user_details))
+    return resp.ok

@@ -5,11 +5,9 @@ Design:
 database (csv for now) - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
--Create newuser.html + css and initial js
+-Implement cancel button on writeemail
 
 *Remaining tasks:*
--Implement create new user - sys api might read dict as string, put if clause that converts to dict (json.loads) if this happens
--Implement cancel button on writeemail
 -Prevent addition of commas to user details and passwords
 -Refactor
 
@@ -21,6 +19,8 @@ database (csv for now) - sysapi - processapi - expapi - html/css/js
 -Improve accessibility of pages
 
 *Previous tasks:*
+-Implement create new user - DONE
+-Create newuser.html + css and initial js - DONE
 -Implement update user details - DONE
 -Create update user html page - DONE
 -Implement Open Settings (as sliding sidebar) - DONE

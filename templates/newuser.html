@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Inbox</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../static/index.css">
+        <link rel="stylesheet" href="../static/updateuser.css">
+    </head>
+    <body>
+        <center><main>
+            <div class="header">
+                <p>Already have an account? <a href="http://127.0.0.1:5000/web-app/login"><b>Login Here</b></a></p>
+            </div>
+            <div class="title-bar">
+                <h1 class="title">Create Account</h1>
+            </div>
+            <div class="container">
+                <form id="new-user-form">
+                    <fieldset>
+                        <legend>Enter Your Details</legend>
+                        <div class="user-property">
+                            <label for="first-name">First Name:</label>
+                            <input id="first-name" type="first name" required>
+                        </div>
+                        <div class="user-property">
+                            <label for="last-name">Last Name:</label>
+                            <input id="last-name" type="last name" required>
+                        </div>
+                        <div class="user-property">
+                            <label for="email-address">Email Address:</label>
+                            <input id="email-address" type="email" required>
+                        </div>
+                        <div class="user-property">
+                            <label for="gender-selector">Gender:</label>
+                            <select id="gender-selector" required>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                                <option value="N">Non-binary</option>
+                            </select>
+                        </div>
+                        <div class="user-property">
+                            <label for="password">Password:</label>
+                            <input id="password" type="password" minlength="5" pattern="[^,]+" required>
+                        </div>
+                        <div class="user-property">
+                            <label for="repeat-password">Repeat Password:</label>
+                            <input id="repeat-password" type="password" minlength="5" pattern="[^,]+" required>
+                        </div>
+                        <button id="submit-btn">Submit</button>
+                    </fieldset>
+                </form>
+            </div>
+        </main></center>
+        <script src="../static/newuser.js"></script>
+    </body>
+</html>
