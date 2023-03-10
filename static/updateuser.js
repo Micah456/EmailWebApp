@@ -14,7 +14,7 @@ const repeatPasswordEl = document.getElementById("repeat-password")
 const firstNameEl = document.getElementById("first-name")
 const lastNameEl = document.getElementById("last-name")
 const genderSelectorEl = document.getElementById("gender-selector")
-const updateDetailsBtnEl = document.getElementById("update-details-btn")
+const cancelBtnEl = document.getElementById("cancel-btn")
 
 
 const getCookie = (cookieKey) => {
@@ -187,6 +187,6 @@ submitPasswordBtnEl.addEventListener('click', function(){
     submitUserDetails()
     
 })
-updateDetailsBtnEl.addEventListener('click', function(){
-    window.location.replace("http://127.0.0.1:5000/web-app/update-user")
+cancelBtnEl.addEventListener('click', function(){
+    window.location.replace("http://127.0.0.1:5000/web-app/inbox")
 })

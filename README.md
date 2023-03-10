@@ -5,9 +5,11 @@ Design:
 database (csv for now) - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
--Make code dry
+-Make ewa-server dry
 
 *Remaining tasks: *Refactor tasks:*
+-Make python function files dry
+-Dry code
 -Create sql db for email and user data
 -Connect to databases
 -Update html to use more semantic tags - e.g. nav, section, article, aside, etc
@@ -16,6 +18,7 @@ database (csv for now) - sysapi - processapi - expapi - html/css/js
 -Improve accessibility of pages
 
 *Previous tasks:*
+-Make css code dry - DONE
 -Prevent addition of commas to user details and passwords - DONE
 -Implement cancel button on writeemail - DONE
 -Implement create new user - DONE

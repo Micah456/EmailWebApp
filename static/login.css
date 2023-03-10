@@ -1,0 +1,14 @@
+.login-input{
+    background: #03213d;
+    border-radius: 7px;
+    border: none;
+    font-size:1.5rem;
+    margin: .3rem;
+    padding: .5rem;
+    color: azure;
+}
+
+#error-message{
+    color: red;
+    display:none;
+}
