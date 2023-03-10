@@ -57,6 +57,10 @@ def load_read_email(emailid):
 def write_email():
     return render_template("writeemail.html")
 
+@app.route("/web-app/update-user")
+def update_user_webapp():
+    return render_template("updateuser.html")
+
 # Sys API
 # GET Requests
 @app.route("/sys-api")
@@ -151,7 +155,10 @@ def update_user(userid):
         #if userid cannot be parsed to int
         print(e)
         return bad_request("Userid must be int.")
-    if ewa_sysapi_func.update_user(request.json, userid) == False:
+    user_details = request.json
+    if type(user_details) == str:
+        user_details = json.loads(user_details)
+    if ewa_sysapi_func.update_user(user_details, userid) == False:
         #NOTE: request.json is dict object
         return server_error()
     msg_json = json.dumps({"Message" : "User updated"})
@@ -212,6 +219,20 @@ def save_email_proapi():
         resp = Response(msg_json, mimetype='application/json', status=200)
     else:
         msg_json = json.dumps({"Message":"Email not created/updated"})
+        resp = Response(msg_json, mimetype='application/json', status=500)
+    return resp
+
+@app.route("/pro-api/update-user/<userid>", methods=["PUT"])
+def update_user_proapi(userid):
+    user_details = request.json
+    if type(user_details) == str:
+        user_details = json.loads(user_details)
+    success = ewa_proapi_func.update_user(userid, user_details)
+    if success:
+        msg_json = json.dumps({"Message":"User updated successfully!"})
+        resp = Response(msg_json, mimetype='application/json', status=200)
+    else:
+        msg_json = json.dumps({"Message":"User not updated"})
         resp = Response(msg_json, mimetype='application/json', status=500)
     return resp
 
@@ -290,6 +311,16 @@ def save_email_expapi():
             resp = Response(msg_json, mimetype='application/json', status=500)
     return resp
 
+@app.route("/exp-api/update-user/<userid>", methods=["PUT"])
+def update_user_expapi(userid):
+    user_details = request.json
+    if ewa_expapi_func.update_user(userid, user_details):
+        msg_json = json.dumps({"Message":"User successfully updated"})
+        resp = Response(msg_json, mimetype='application/json', status=200)
+    else:
+        msg_json = json.dumps({"Message":"User not updated"})
+        resp = Response(msg_json, mimetype='application/json', status=500)
+    return resp
 
 #TESTAPI
 

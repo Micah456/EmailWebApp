@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Inbox</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../static/index.css">
+        <link rel="stylesheet" href="../static/updateuser.css">
+        <link rel="stylesheet" href="../static/slidebar.css">
+    </head>
+    <body>
+        <div class="slide-sidebar" id="slide-sidebar">
+            <div class="slide-sidebar-header">
+                <h2>Options</h2>
+                <img id="close-settings-btn" class="three-bar-btn" src="../images/three-bars-icon.jpg" width="30rem">
+            </div>
+            <button id="update-details-btn">Update Details</button>
+            <button id="logout-btn">Log out</button>
+        </div>
+        <center><main>
+            <div class="header">
+                <p id="current-user" class="current-user">Welcome: User</p>
+                <img id="settings-btn" class="three-bar-btn" src="../images/three-bars-icon.jpg" width="30rem">
+            </div>
+            <div class="title-bar">
+                <h1 class="title">Update Details</h1>
+            </div>
+            <div class="container">
+                <fieldset>
+                    <legend>Change Details</legend>
+                    <div class="user-property">
+                        <label for="first-name">First Name:</label>
+                        <input id="first-name" type="first name">
+                    </div>
+                    <div class="user-property">
+                        <label for="last-name">Last Name:</label>
+                        <input id="last-name" type="last name">
+                    </div>
+                    <div class="user-property">
+                        <label for="gender-selector">Gender:</label>
+                        <select id="gender-selector">
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                            <option value="N">Non-binary</option>
+                        </select>
+                    </div>
+                    <button id="submit-user-details-btn">Submit</button>
+                </fieldset>
+                <fieldset>
+                    <legend>Change Password</legend>
+                    <div class="user-property">
+                        <label for="old-password">Old Password:</label>
+                        <input id="old-password" type="password">
+                    </div>
+                    <div class="user-property">
+                        <label for="new-password">New Password:</label>
+                        <input id="new-password" type="password">
+                    </div>
+                    <div class="user-property">
+                        <label for="repeat-password">Repeat Password:</label>
+                        <input id="repeat-password" type="password">
+                    </div>
+                    <button id="submit-password-btn">Submit</button>
+                </fieldset>
+            </div>
+        </main></center>
+        <script src="../static/updateuser.js"></script>
+    </body>
+</html>

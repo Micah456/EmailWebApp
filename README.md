@@ -5,11 +5,12 @@ Design:
 database (csv for now) - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
--Create update user html page
+-Create newuser.html + css and initial js
 
 *Remaining tasks:*
--Implement update user details
 -Implement create new user - sys api might read dict as string, put if clause that converts to dict (json.loads) if this happens
+-Implement cancel button on writeemail
+-Prevent addition of commas to user details and passwords
 -Refactor
 
 *Refactor tasks*
@@ -20,6 +21,8 @@ database (csv for now) - sysapi - processapi - expapi - html/css/js
 -Improve accessibility of pages
 
 *Previous tasks:*
+-Implement update user details - DONE
+-Create update user html page - DONE
 -Implement Open Settings (as sliding sidebar) - DONE
 -Add warning dialogue if closing/going to different page without saving/sending - DONE
 -Remove edit button from inbox and sent reademails - DONE
@@ -45,6 +48,7 @@ Load emails into dashboard and set resulting inbox array - DONE
 
 *Possible future tasks (stretch goals- please branch):*
 -Implement print button for emails
+-Password rules
 -Change date displayed on emails to time or day of the week if within given time period
 -Implement forward and replies
 -Enable deletion of draft emails - involves trash folder

@@ -120,3 +120,12 @@ def save_email(email_dict, methodType):
     else:
         return False
 
+def update_user(userid, user_details):
+    #Send user to sys api
+    print(type(user_details))
+    url = "http://127.0.0.1:5000/sys-api/users/" + str(userid)
+    resp = requests.put(url, json=json.dumps(user_details))
+    if resp.ok:
+        return True
+    else:
+        return False

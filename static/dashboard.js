@@ -8,6 +8,7 @@ const logoutBtnEl = document.getElementById("logout-btn")
 const settingsBtnEl = document.getElementById("settings-btn")
 const closeSettingsBtnEl = document.getElementById("close-settings-btn")
 const slideSidebarEl = document.getElementById("slide-sidebar")
+const updateDetailsBtnEl = document.getElementById("update-details-btn")
 emailDisplay.innerHTML = "";
 
 const getCookie = (cookieKey) => {
@@ -145,4 +146,7 @@ closeSettingsBtnEl.addEventListener('click', function(){
     slideSidebarEl.classList.remove("slide-sidebar-open")
     slideSidebarEl.classList.add("slide-sidebar-closed")
     console.log("closed!")
+})
+updateDetailsBtnEl.addEventListener('click', function(){
+    window.location.replace("http://127.0.0.1:5000/web-app/update-user")
 })
