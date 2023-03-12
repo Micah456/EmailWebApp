@@ -1,5 +1,6 @@
 from flask import Flask, Response, request, render_template, send_file
-import ewa_sysapi_func, ewa_expapi_func, ewa_proapi_func, json
+import ewa_sysapi_func, ewa_expapi_func, ewa_proapi_func, json, os
+from dotenv import load_dotenv
 
 app = Flask("Email Web App Server")
 
@@ -19,6 +20,69 @@ def server_error(details="No details"):
     msg_json = json.dumps(error_message)
     return Response(msg_json, mimetype='application/json', status=500)
 
+# Other functions
+def find_last_index(string, x):
+    index = -1
+    for i in range(0, len(string)):
+        if string[i] == x:
+            index = i
+    return index
+
+def get_view(base_url):
+    viewIndex = find_last_index(base_url,'/') + 1
+    view = str(base_url)[viewIndex:]
+    print(view)
+    return view
+
+def get_resource_response_sysapi(function, arg=None):
+    if arg: resource = function(arg)
+    else: resource = function()
+    if resource:
+        return Response(resource, mimetype='application/json')
+    return resource_not_found()
+
+def id_is_int(id):
+    try:
+        int(id)
+        return True
+    except Exception as e:
+        #if userid cannot be parsed to int
+        print(e)
+        return False
+
+def get_resource_response_by_id_sysapi(id, function):
+    print("############# Checking if id is int")
+    if id_is_int(id):
+        return get_resource_response_sysapi(function, id)
+    print("############### ID is not integer")
+    return bad_request("UserID/EmailID must be int.")
+    
+
+def create_resource_response_sysapi(resource, resourceType, function, arg=None, create=True):
+    if create:
+        status_code=201
+        action = "created"
+    else:
+        status_code=200
+        action = "updated"
+    if type(resource) == str:
+        resource = json.loads(resource)
+    if arg: success = function(resource, arg)
+    else: success = function(resource)
+    if success:
+        msg_json = json.dumps({"Message" : resourceType + " " + action + "."})
+        return Response(msg_json, mimetype='application/json', status=status_code)
+    #NOTE: request.json is dict object
+    return server_error()
+
+def update_resource_response_sysapi(resource, id, resourceType, function):
+    print("############# Checking if id is int")
+    if id_is_int(id):
+        return create_resource_response_sysapi(resource, resourceType, function, arg=id, create=False)
+    print("############### ID is not integer")
+    return bad_request("UserID/EmailID must be int.")
+    
+
 # Images
 @app.route("/images/three-bars-icon.jpg")
 @app.route("/web-app/images/three-bars-icon.jpg")
@@ -29,26 +93,18 @@ def load_bar_icon():
 
 # Web App
 @app.route("/web-app/login")
-def load_login_page():
-    return render_template("login.html")
-
 @app.route("/web-app/inbox")
-def load_inbox_page():
-    return render_template("inbox.html")
-
 @app.route("/web-app/sent")
-def load_sent_page():
-    return render_template("sent.html")
-
 @app.route("/web-app/drafts")
-def load_drafts_page():
-    return render_template("drafts.html")
+def load_page():
+    template = get_view(request.base_url) + ".html"
+    return render_template(template)
 
 @app.route("/web-app/inbox/<emailid>")
 @app.route("/web-app/sent/<emailid>")
 @app.route("/web-app/drafts/<emailid>")
 def load_read_email(emailid):
-    if request.args.get("edit") == "True":
+    if request.args.get("edit"):
         return render_template("writeemail.html")
     else:
         return render_template("reademail.html")
@@ -73,103 +129,38 @@ def hellosys():
 
 @app.route("/sys-api/users")
 def users():
-    users=ewa_sysapi_func.get_user_list()
-    if users == None:
-        return resource_not_found()
-    return Response(users, mimetype='application/json')
+    return get_resource_response_sysapi(ewa_sysapi_func.get_user_list)
 
 @app.route("/sys-api/users/<userid>")
 def user_id(userid):
-    try:
-        int(userid)
-    except Exception as e:
-        #if userid cannot be parsed to int
-        print(e)
-        return bad_request("Userid must be int.")
-    user=ewa_sysapi_func.get_user_by_id(userid)
-    if user==None:
-        #No user found
-        return resource_not_found()
-    return Response(user, mimetype='application/json')
+    return get_resource_response_by_id_sysapi(userid, ewa_sysapi_func.get_user_by_id)
+    
 
 @app.route("/sys-api/emails")
 def emails():
-    emails=ewa_sysapi_func.get_emails()
-    if emails == None:
-        return resource_not_found()
-    return Response(emails, mimetype='application/json')
+    return get_resource_response_sysapi(ewa_sysapi_func.get_emails)
 
 @app.route("/sys-api/emails/<emailid>")
 def email_id(emailid):
-    try:
-        int(emailid)
-    except Exception as e:
-        #if emailid cannot be parsed to int
-        print(e)
-        return bad_request("Emailid must be int.")
-    email=ewa_sysapi_func.get_email_by_id(emailid)
-    if email==None:
-        #No email found
-        return resource_not_found()
-    return Response(email, mimetype='application/json')
+    return get_resource_response_by_id_sysapi(emailid, ewa_sysapi_func.get_email_by_id)
 
 #POST Requests
 @app.route("/sys-api/emails", methods=["POST"])
 def create_email():
-    email = request.json
-    if type(email) == str:
-        email = json.loads(email)
-    if ewa_sysapi_func.create_email(email) == False:
-        #NOTE: request.json is dict object
-        return server_error()
-    msg_json = json.dumps({"Message" : "Email created"})
-    return Response(msg_json, mimetype='application/json', status=201) 
+    return create_resource_response_sysapi(request.json, "Email", ewa_sysapi_func.create_email) 
 
 @app.route("/sys-api/users", methods=["POST"])
 def create_user():
-    user_details = request.json
-    if type(user_details) == str:
-        user_details = json.loads(user_details)
-    if ewa_sysapi_func.create_user(user_details) == False:
-        #NOTE: request.json is dict object
-        return server_error()
-    msg_json = json.dumps({"Message" : "User created"})
-    return Response(msg_json, mimetype='application/json', status=201)
+    return create_resource_response_sysapi(request.json, "User", ewa_sysapi_func.create_user)
 
 #PUT Requests
 @app.route("/sys-api/emails/<emailid>", methods=["PUT"])
 def update_email(emailid):
-    email = request.json
-    if type(email) == str:
-        email = json.loads(email)
-    try:
-        int(emailid)
-    except Exception as e:
-        #if emailid cannot be parsed to int
-        print(e)
-        return bad_request("Emailid must be int.")
-    if ewa_sysapi_func.update_email(email, emailid) == False:
-        #NOTE: request.json is dict object
-        return server_error()
-    msg_json = json.dumps({"Message" : "Email updated"})
-    return Response(msg_json, mimetype='application/json', status=200)
+    return update_resource_response_sysapi(request.json, emailid, "Email", ewa_sysapi_func.update_email)
 
 @app.route("/sys-api/users/<userid>", methods=["PUT"])
 def update_user(userid):
-    try:
-        int(userid)
-    except Exception as e:
-        #if userid cannot be parsed to int
-        print(e)
-        return bad_request("Userid must be int.")
-    user_details = request.json
-    if type(user_details) == str:
-        user_details = json.loads(user_details)
-    if ewa_sysapi_func.update_user(user_details, userid) == False:
-        #NOTE: request.json is dict object
-        return server_error()
-    msg_json = json.dumps({"Message" : "User updated"})
-    return Response(msg_json, mimetype='application/json', status=200) 
+    return update_resource_response_sysapi(request.json, userid, "User", ewa_sysapi_func.update_user) 
 
 #ProAPI
 #GET Requests
@@ -366,5 +357,6 @@ def get_cookie():
     return resp
 
 if __name__=="__main__":
-    app.run(debug=True) 
+    port = 5000
+    app.run(debug=True, port=port) 
     # When no port is specified, starts at default port 5000
