@@ -2,139 +2,103 @@ import json
 import pandas as pd
 import datetime as dt
 
-def get_user_list():
+emailFile = "data/emailCollection.xlsx"
+userFile = "data/users.csv"
+
+def get_resource(read_func, filename):
     try:
-        users_df = pd.read_csv("data/users.csv")
-        users_df = users_df.transpose()
-        users_json = users_df.to_json()
-        return users_json
+        resource_df = read_func(filename)
+        resource_df = resource_df.transpose()
+        resource_json = resource_df.to_json()
+        return resource_json
     except Exception as e:
         print(e)
         return None
+    
+def get_resource_by_id(read_func, filename, id):
+    resource_df = read_func(filename)
+    print("--------------------")
+    print(resource_df)
+    try:
+        resource_data = resource_df.iloc[int(id)]
+    except IndexError:
+        print("Index out of bounds")
+        return None
+    print("--------------------")
+    print(resource_data)
+    resource_data_json = resource_data.to_json()
+    return resource_data_json
+
+def create_resource(read_func, filename, resource_dict, isEmail):
+    try:
+        print("ewa_sysapi_func.py: creating new email/user\n---------------------")
+        resources_df = read_func(filename)
+        print(resources_df)
+        new_id = len(resources_df.index)
+        print("New resource's id: ", new_id)
+        new_row = pd.DataFrame(resource_dict, index=['0'])
+        new_row['ID'] = new_id
+        if isEmail:
+            new_row['Date Sent'] = dt.datetime.fromtimestamp(new_row['Date Sent']/1000)
+        print(new_row)
+        new_resources_df = pd.concat([resources_df, new_row])
+        new_resources_df = new_resources_df.set_index("ID")
+        print(new_resources_df)
+        if(isEmail):
+            new_resources_df.to_excel(filename)
+        else:
+            new_resources_df.to_csv(filename)
+        return True
+    except Exception as e:
+        print(e)
+        return False
+
+def update_resource(read_func, filename, resource_dict, isEmail, id):
+    try:
+        row_id = int(id)
+        if row_id != resource_dict['ID']:
+            print("URI parameter and ID don't match")
+            return False
+        resources_df = read_func(filename)
+        replace_row = pd.DataFrame(resource_dict, index=['0'])
+        if isEmail:
+            replace_row['Date Sent'] = dt.datetime.fromtimestamp(replace_row['Date Sent']/1000)
+        num_col = len(resources_df.columns)
+        for i in range(num_col):
+            resources_df.iloc[row_id, i] = replace_row.iloc[0,i]
+        resources_df = resources_df.set_index("ID")
+        if isEmail:
+            resources_df.to_excel(filename)
+        else:
+            resources_df.to_csv(filename)
+        return True
+    except Exception as e:
+        print(e)
+        return False
+
+def get_user_list():
+    return get_resource(pd.read_csv, userFile)
 
 def get_user_by_id(id):
-    users_df = pd.read_csv("data/users.csv")
-    print("--------------------")
-    print(users_df)
-    try:
-        user_data_df = users_df.iloc[int(id)]
-    except IndexError:
-        print("Index out of bounds")
-        return None
-    print("--------------------")
-    print(user_data_df)
-    user_data_json = user_data_df.to_json()
-    return user_data_json
+    return get_resource_by_id(pd.read_csv, userFile, id)
 
 def get_emails():
-    try:
-        emails_df = pd.read_excel("data/emailCollection.xlsx")
-        emails_df = emails_df.transpose()
-        emails_json = emails_df.to_json()
-        return emails_json
-    except Exception as e:
-        print(e)
-        return None
+    return get_resource(pd.read_excel, emailFile)
 
 def get_email_by_id(id):
-    emails_df = pd.read_excel("data/emailCollection.xlsx", sheet_name='Sheet1')
-    print("--------------------")
-    print(emails_df)
-    try:
-        email_data_df = emails_df.iloc[int(id)]
-    except IndexError:
-        print("Index out of bounds")
-        return None
-    print("--------------------")
-    print(email_data_df)
-    email_data_json = email_data_df.to_json()
-    return email_data_json
+    return get_resource_by_id(pd.read_excel, emailFile, id)
 
 def create_email(email_dict):
-    print("ewa_sysapi_func.py: email_dict type: ", type(email_dict))
-    try:
-        print("ewa_sysapi_func.py: creating email\n------------------")
-        emails_df = pd.read_excel("data/emailCollection.xlsx")
-        print(emails_df)
-        new_id = len(emails_df.index)
-        print("New email's id: ", new_id)
-        new_row = pd.DataFrame(email_dict, index=['0'])
-        new_row['ID'] = new_id
-        new_row['Date Sent'] = dt.datetime.fromtimestamp(new_row['Date Sent']/1000)
-        print(new_row)
-        new_emails_df = pd.concat([emails_df, new_row])
-        new_emails_df = new_emails_df.set_index("ID")
-        print(new_emails_df)
-        new_emails_df.to_excel("data/emailCollection.xlsx")
-        return True
-    except Exception as e:
-        print(e)
-        return False
+    return create_resource(pd.read_excel, emailFile, email_dict, True)
 
 def create_user(user_dict):
-    try:
-        users_df = pd.read_csv("data/users.csv")
-        print(users_df)
-        new_id = len(users_df.index)
-        print("New user's id: ", new_id)
-        new_row = pd.DataFrame(user_dict, index=['0'])
-        new_row['ID'] = new_id
-        print(new_row)
-        new_users_df = pd.concat([users_df, new_row])
-        new_users_df = new_users_df.set_index("ID")
-        print(new_users_df)
-        new_users_df.to_csv("data/users.csv")
-        return True
-    except Exception as e:
-        print(e)
-        return False
+    return create_resource(pd.read_csv, userFile, user_dict, False)
 
 def update_email(email_dict, emailid):
-    try:
-        row_id = int(emailid)
-        #print(email_dict['ID'])
-        if row_id != email_dict['ID']:
-            print("URI parameter and email ID don't match")
-            return False
-        #print("ewa_sysapi_func.py: updating email\n------------------")
-        emails_df = pd.read_excel("data/emailCollection.xlsx")
-        #print(emails_df)
-        replace_row = pd.DataFrame(email_dict, index=['0'])
-        replace_row['Date Sent'] = dt.datetime.fromtimestamp(replace_row['Date Sent']/1000)
-        #print(replace_row)
-        num_col = len(emails_df.columns)
-        for i in range(num_col):
-            emails_df.iloc[row_id, i] = replace_row.iloc[0,i]
-        emails_df = emails_df.set_index("ID")
-        emails_df.to_excel("data/emailCollection.xlsx")
-        #print(emails_df)
-        return True
-    except Exception as e:
-        print(e)
-        return False
-
+    return update_resource(pd.read_excel, emailFile, email_dict, True, emailid)
+    
 def update_user(user_dict, userid):
-    try:
-        row_id = int(userid)
-        print(row_id)
-        if row_id != user_dict['ID']:
-            print("URI parameter and user ID don't match")
-            return False
-        print("ewa_sysapi_func.py: updating user\n------------------")
-        users_df = pd.read_csv("data/users.csv")
-        print(users_df)
-        replace_row = pd.DataFrame(user_dict, index=['0'])
-        print(replace_row)
-        num_col = len(users_df.columns)
-        for i in range(num_col):
-            users_df.iloc[row_id,i] = replace_row.iloc[0,i]
-        users_df = users_df.set_index("ID")
-        users_df.to_csv("data/users.csv")
-        print(users_df)
-        return True
-    except Exception as e:
-        print(e)
-        return False
+    return update_resource(pd.read_csv, userFile, user_dict, False, userid)
 
 def hello_from_sys():
     print("Using sys-api")

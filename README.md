@@ -5,9 +5,11 @@ Design:
 database (csv for now) - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
--Make ewa-server dry
+-Make ewa_server pro api functions dry
+-Make ewa_proapi_func dry
 
 *Remaining tasks: *Refactor tasks:*
+-Automatically convert emails entered to lowercase
 -Make python function files dry
 -Dry code
 -Create sql db for email and user data
@@ -18,6 +20,8 @@ database (csv for now) - sysapi - processapi - expapi - html/css/js
 -Improve accessibility of pages
 
 *Previous tasks:*
+-Make ewa_sysapi_func dry - DONE
+-Make ewa_server sys api functions dry - DONE
 -Make css code dry - DONE
 -Prevent addition of commas to user details and passwords - DONE
 -Implement cancel button on writeemail - DONE

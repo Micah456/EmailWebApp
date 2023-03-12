@@ -34,6 +34,7 @@ def get_view(base_url):
     print(view)
     return view
 
+#sys-api helper functions
 def get_resource_response_sysapi(function, arg=None):
     if arg: resource = function(arg)
     else: resource = function()
