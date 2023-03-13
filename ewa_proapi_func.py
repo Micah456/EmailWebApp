@@ -1,37 +1,21 @@
 import requests, json, ast
 def validate(login_dict):
+    #Convert to dict if str
     if type(login_dict) == str:
         login_dict = ast.literal_eval(login_dict)
         print("After converting to dict: ",type(login_dict))
     #Find user in database
-    #Load all users
-    resp = requests.get("http://127.0.0.1:5000/sys-api/users")
-    user_dicts = resp.json()
-    print(user_dicts)
-    user_email = ""
-    user_dict = {}
-    i = 0
-    while(i < len(user_dicts)):
-        valid_user = user_dicts[str(i)]
-        print("Printing type of valid user and login dict")
-        print(type(valid_user))
-        print(type(login_dict))
-        if valid_user.get('Email Address') == login_dict['email']:
-            user_email = valid_user['Email Address']
-            user_dict = valid_user
-            break
-        i = i+1
-    if(user_email):
-        #Email is valid
+    user_dict = json.loads(load_user(login_dict['email']))
+    print("user_dict type: ", type(user_dict))
+    #Check if user is valid
+    if(user_dict):
+        #If user is valid
         #Compare password with user password on db
         if(user_dict['Password'] == login_dict['password']):
             #If match, return true
             return True
-        else:
-            return False
-    else:
-        #Email not valid
-        return False
+    #User not found OR password doesn't match
+    return False
 
 def load_user(email):
     #Load all users
@@ -115,36 +99,24 @@ def save_email(email_dict, methodType):
         #PUT
         url = "http://127.0.0.1:5000/sys-api/emails/" + str(email_dict['ID'])
         resp = requests.put(url, json=json.dumps(email_dict))
-    if resp.ok:
-        return True
-    else:
-        return False
+    return resp.ok
 
 def update_user(userid, user_details):
     #Send user to sys api
     print(type(user_details))
     url = "http://127.0.0.1:5000/sys-api/users/" + str(userid)
     resp = requests.put(url, json=json.dumps(user_details))
-    if resp.ok:
-        return True
-    else:
-        return False
+    return resp.ok
+
     
 def create_user(user_details):
     #Check user doesn't exist
-    #Get all users
-    resp = requests.get("http://127.0.0.1:5000/sys-api/users")
-    user_dict = resp.json()
-    #Get user email
-    email = user_details['Email Address']
-    #Check if email address matches
-    for i in range(len(user_dict)):
-        found_user = user_dict[str(i)]
-        found_email_address = found_user['Email Address']
-        print(found_email_address)
-        if found_email_address == email:
-            #if match return false
-            return False
-    #else (if match not found) send user to sys api
-    resp = requests.post("http://127.0.0.1:5000/sys-api/users", json=json.dumps(user_details))
-    return resp.ok
+    found_user = load_user(user_details['Email Address'])
+    if not(found_user):
+        print("user not found")
+        #User doesn't exist - send user to sys api
+        resp = requests.post("http://127.0.0.1:5000/sys-api/users", json=json.dumps(user_details))
+        return resp.ok
+    #User does exist
+    print("user found!")
+    return False 
