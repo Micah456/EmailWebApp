@@ -1,4 +1,8 @@
-import requests, json, ast
+import requests, json, ast, os
+from dotenv import load_dotenv
+
+sysapiBaseURL = os.getenv("sysapi")
+
 def validate(login_dict):
     #Convert to dict if str
     if type(login_dict) == str:
@@ -19,7 +23,7 @@ def validate(login_dict):
 
 def load_user(email):
     #Load all users
-    resp = requests.get("http://127.0.0.1:5000/sys-api/users")
+    resp = requests.get(sysapiBaseURL + "/users")
     user_dict = resp.json()
     #Filter users
     for i in range(len(user_dict)):
@@ -31,9 +35,12 @@ def load_user(email):
     print("Email not found")
     return None
 
-def load_user_emails(userid, user_email_address):
+def load_user_emails(userid):
+    user_email_address = get_user_email_address(userid)
+    if(user_email_address == None):
+        return None
     #Load all emails
-    resp = requests.get("http://127.0.0.1:5000/sys-api/emails")
+    resp = requests.get(sysapiBaseURL + "/emails")
     email_dict = resp.json()
     #Filter emails
     inbox_list = []
@@ -60,19 +67,27 @@ def load_user_emails(userid, user_email_address):
 
 def get_user_email_address(userid):
     #Load user
-    url = "http://127.0.0.1:5000/sys-api/users/" + userid 
+    url = sysapiBaseURL + "/users/" + str(userid)
     resp = requests.get(url)
     user_dict = resp.json()
     #Return address
-    return user_dict['Email Address']
+    try:
+        email_address = user_dict['Email Address']
+    except:
+        email_address = None
+    finally:
+        return email_address
 
 def get_dashboard(email):
     user = load_user(email)
     print(user)
-    user_dict = json.loads(user)
+    try:
+        user_dict = json.loads(user)
+    except:
+        return None
     userid = user_dict['ID']
     #Get email dict
-    user_emails = load_user_emails(userid, email)
+    user_emails = load_user_emails(userid)
     user_emails_dict = json.loads(user_emails)
     #Return combined as json obj
     dashboard_dict = {"User Details" : user_dict, "User Emails" : user_emails_dict}
@@ -94,17 +109,17 @@ def save_email(email_dict, methodType):
     #return json.dumps(email_dict)
     #Send email to sys api
     if methodType == "POST":
-        resp = requests.post("http://127.0.0.1:5000/sys-api/emails", json=json.dumps(email_dict))
+        resp = requests.post(sysapiBaseURL + "/emails", json=json.dumps(email_dict))
     else:
         #PUT
-        url = "http://127.0.0.1:5000/sys-api/emails/" + str(email_dict['ID'])
+        url = sysapiBaseURL + "/emails/" + str(email_dict['ID'])
         resp = requests.put(url, json=json.dumps(email_dict))
     return resp.ok
 
 def update_user(userid, user_details):
     #Send user to sys api
     print(type(user_details))
-    url = "http://127.0.0.1:5000/sys-api/users/" + str(userid)
+    url = sysapiBaseURL + "/users/" + str(userid)
     resp = requests.put(url, json=json.dumps(user_details))
     return resp.ok
 
@@ -115,7 +130,7 @@ def create_user(user_details):
     if not(found_user):
         print("user not found")
         #User doesn't exist - send user to sys api
-        resp = requests.post("http://127.0.0.1:5000/sys-api/users", json=json.dumps(user_details))
+        resp = requests.post( sysapiBaseURL + "/users", json=json.dumps(user_details))
         return resp.ok
     #User does exist
     print("user found!")

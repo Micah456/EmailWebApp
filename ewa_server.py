@@ -20,7 +20,35 @@ def server_error(details="No details"):
     msg_json = json.dumps(error_message)
     return Response(msg_json, mimetype='application/json', status=500)
 
+# Resource getters and setters
+
+def get_resource_response(resource):
+    if resource:
+        return Response(resource, mimetype='application/json')
+    return resource_not_found()
+
+def set_resource_response(response, resourceType, create=True):
+    if create:
+        status_code=201
+        action = "created"
+    else:
+        status_code=200
+        action = "updated"
+    if response:
+        msg_json = json.dumps({"Message" : resourceType + " successfully " + action + "."})
+        resp = Response(msg_json, mimetype='application/json', status=status_code)
+    else:
+        msg_json = json.dumps({"Message" : resourceType + " not " + action + "."})
+        resp = Response(msg_json, mimetype='application/json', status=500)
+    return resp
+
 # Other functions
+
+def convert_resource_to_dict(resource):
+    if type(resource) == str:
+        resource = json.loads(resource)
+    return resource  
+
 def find_last_index(string, x):
     index = -1
     for i in range(0, len(string)):
@@ -33,56 +61,6 @@ def get_view(base_url):
     view = str(base_url)[viewIndex:]
     print(view)
     return view
-
-#sys-api helper functions
-def get_resource_response_sysapi(function, arg=None):
-    if arg: resource = function(arg)
-    else: resource = function()
-    if resource:
-        return Response(resource, mimetype='application/json')
-    return resource_not_found()
-
-def id_is_int(id):
-    try:
-        int(id)
-        return True
-    except Exception as e:
-        #if userid cannot be parsed to int
-        print(e)
-        return False
-
-def get_resource_response_by_id_sysapi(id, function):
-    print("############# Checking if id is int")
-    if id_is_int(id):
-        return get_resource_response_sysapi(function, id)
-    print("############### ID is not integer")
-    return bad_request("UserID/EmailID must be int.")
-    
-
-def create_resource_response_sysapi(resource, resourceType, function, arg=None, create=True):
-    if create:
-        status_code=201
-        action = "created"
-    else:
-        status_code=200
-        action = "updated"
-    if type(resource) == str:
-        resource = json.loads(resource)
-    if arg: success = function(resource, arg)
-    else: success = function(resource)
-    if success:
-        msg_json = json.dumps({"Message" : resourceType + " " + action + "."})
-        return Response(msg_json, mimetype='application/json', status=status_code)
-    #NOTE: request.json is dict object
-    return server_error()
-
-def update_resource_response_sysapi(resource, id, resourceType, function):
-    print("############# Checking if id is int")
-    if id_is_int(id):
-        return create_resource_response_sysapi(resource, resourceType, function, arg=id, create=False)
-    print("############### ID is not integer")
-    return bad_request("UserID/EmailID must be int.")
-    
 
 # Images
 @app.route("/images/three-bars-icon.jpg")
@@ -130,67 +108,58 @@ def hellosys():
 
 @app.route("/sys-api/users")
 def users():
-    return get_resource_response_sysapi(ewa_sysapi_func.get_user_list)
+    return get_resource_response(ewa_sysapi_func.get_user_list())
 
 @app.route("/sys-api/users/<userid>")
 def user_id(userid):
-    return get_resource_response_by_id_sysapi(userid, ewa_sysapi_func.get_user_by_id)
+    return get_resource_response(ewa_sysapi_func.get_user_by_id(userid))
     
 
 @app.route("/sys-api/emails")
 def emails():
-    return get_resource_response_sysapi(ewa_sysapi_func.get_emails)
+    return get_resource_response(ewa_sysapi_func.get_emails())
 
 @app.route("/sys-api/emails/<emailid>")
 def email_id(emailid):
-    return get_resource_response_by_id_sysapi(emailid, ewa_sysapi_func.get_email_by_id)
+    return get_resource_response(ewa_sysapi_func.get_email_by_id(emailid))
 
 #POST Requests
 @app.route("/sys-api/emails", methods=["POST"])
 def create_email():
-    return create_resource_response_sysapi(request.json, "Email", ewa_sysapi_func.create_email) 
+    raw_resource = convert_resource_to_dict(request.json)
+    return set_resource_response(ewa_sysapi_func.create_email(raw_resource), "Email", create=True)
 
 @app.route("/sys-api/users", methods=["POST"])
 def create_user():
-    return create_resource_response_sysapi(request.json, "User", ewa_sysapi_func.create_user)
+    raw_resource = convert_resource_to_dict(request.json)
+    return set_resource_response(ewa_sysapi_func.create_user(raw_resource), "User", create=True)
 
 #PUT Requests
 @app.route("/sys-api/emails/<emailid>", methods=["PUT"])
 def update_email(emailid):
-    return update_resource_response_sysapi(request.json, emailid, "Email", ewa_sysapi_func.update_email)
+    raw_resource = convert_resource_to_dict(request.json)
+    return set_resource_response(ewa_sysapi_func.update_email(raw_resource, emailid), "Email", create=False)
 
 @app.route("/sys-api/users/<userid>", methods=["PUT"])
 def update_user(userid):
-    return update_resource_response_sysapi(request.json, userid, "User", ewa_sysapi_func.update_user) 
+    raw_resource = convert_resource_to_dict(request.json)
+    return set_resource_response(ewa_sysapi_func.update_user(raw_resource, userid), "User", create=False)
 
 #ProAPI
 #GET Requests
 @app.route("/pro-api/load_user")
 def load_user_proapi():
     user_email = request.args.get('email')
-    user_data = ewa_proapi_func.load_user(user_email)
-    if user_data:
-        return Response(user_data, mimetype='application/json', status=200)
-    else:
-        return resource_not_found()
+    return get_resource_response(ewa_proapi_func.load_user(user_email))
 
 @app.route("/pro-api/user/<userid>/emails")
 def load_user_emails_proapi(userid):
-    user_email_address = ewa_proapi_func.get_user_email_address(userid)
-    user_emails = ewa_proapi_func.load_user_emails(userid, user_email_address)
-    if user_emails:
-        return Response(user_emails, mimetype='application/json', status=200)
-    else:
-        return resource_not_found()
+    return get_resource_response(ewa_proapi_func.load_user_emails(userid))
 
 @app.route("/pro-api/get_dashboard")
 def get_dashboard():
     user_email = request.args.get('email')
-    dashboard = ewa_proapi_func.get_dashboard(user_email)
-    if dashboard:
-        return Response(dashboard, mimetype='application/json', status=200)
-    else:
-        return resource_not_found()
+    return get_resource_response(ewa_proapi_func.get_dashboard(user_email))
 
 #POST Requests
 @app.route("/pro-api/validate", methods=["POST"])
@@ -207,76 +176,40 @@ def validate():
     
 @app.route("/pro-api/save_email", methods=["POST","PUT"])
 def save_email_proapi():
-    initial_email = request.json
-    if type(initial_email) == str:
-        initial_email = json.loads(initial_email)
-    #print("PRO API: json.loads(initial_email) type: ", type(json.loads(initial_email)))
-    #rint("PRO API: initial_email type: ", type(initial_email))
-    success = ewa_proapi_func.save_email(initial_email, request.method)
-    if success:
-        msg_json = json.dumps({"Message":"Email created/updated successfully!"})
-        resp = Response(msg_json, mimetype='application/json', status=200)
+    initial_email = convert_resource_to_dict(request.json)
+    if request.method == "POST":
+        return set_resource_response(ewa_proapi_func.save_email(initial_email, request.method), "Email", create=True)
     else:
-        msg_json = json.dumps({"Message":"Email not created/updated"})
-        resp = Response(msg_json, mimetype='application/json', status=500)
-    return resp
+        return set_resource_response(ewa_proapi_func.save_email(initial_email, request.method), "Email", create=False)
+
 
 @app.route("/pro-api/update-user/<userid>", methods=["PUT"])
 def update_user_proapi(userid):
-    user_details = request.json
-    if type(user_details) == str:
-        user_details = json.loads(user_details)
-    success = ewa_proapi_func.update_user(userid, user_details)
-    if success:
-        msg_json = json.dumps({"Message":"User updated successfully!"})
-        resp = Response(msg_json, mimetype='application/json', status=200)
-    else:
-        msg_json = json.dumps({"Message":"User not updated"})
-        resp = Response(msg_json, mimetype='application/json', status=500)
-    return resp
+    user_details = convert_resource_to_dict(request.json)
+    return set_resource_response(ewa_proapi_func.update_user(userid, user_details), "User", create=False)
 
 @app.route("/pro-api/create-user", methods=["POST"])
 def create_user_proapi():
-    user_details = request.json
-    if type(user_details) == str:
-        user_details = json.loads(user_details)
-    success = ewa_proapi_func.create_user(user_details)
-    if success:
-        msg_json = json.dumps({"Message":"User created successfully!"})
-        resp = Response(msg_json, mimetype='application/json', status=201)
-    else:
-        msg_json = json.dumps({"Message":"User not created"})
-        resp = Response(msg_json, mimetype='application/json', status=500)
-    return resp
+    user_details = convert_resource_to_dict(request.json)
+    return set_resource_response(ewa_proapi_func.create_user(user_details), "User", create=True)
+
 
 #ExpAPI
 #GET Requests
 @app.route("/exp-api/user")
 def load_user_expapi():
     user_email = request.args.get('email')
-    user_data = ewa_expapi_func.load_user(user_email)
-    if user_data:
-        return Response(user_data, mimetype='application/json', status=200)
-    else:
-        return resource_not_found()
+    return get_resource_response(ewa_expapi_func.load_user(user_email))
 
 @app.route("/exp-api/user/<userid>/emails")
 def load_user_emails_expapi(userid):
     #NOTE userid should be passed as int
-    user_emails = ewa_expapi_func.load_user_emails(userid)
-    if user_emails:
-        return Response(user_emails, mimetype='application/json', status=200)
-    else:
-        return resource_not_found()
+    return get_resource_response(ewa_expapi_func.load_user_emails(userid))
 
 @app.route("/exp-api/load_dashboard")
 def load_user_dashboard():
     user_email = request.args.get('email')
-    dashboard_data = ewa_expapi_func.load_user_dashboard(user_email)
-    if dashboard_data:
-        return Response(dashboard_data, mimetype='application/json', status=200)
-    else:
-        return resource_not_found()
+    return get_resource_response(ewa_expapi_func.load_user_dashboard(user_email))
 
 @app.route("/exp-api/logout")
 def log_out():
@@ -308,44 +241,21 @@ def save_email_expapi():
     print("EXP API: initial_email type: ", type(initial_email))
     if(request.method == "POST"):
         #New Email
-        if ewa_expapi_func.save_new_email(initial_email):
-            msg_json = json.dumps({"Message":"Email created and saved"})
-            resp = Response(msg_json, mimetype='application/json', status=201)
-        else:
-            msg_json = json.dumps({"Message":"Email not created"})
-            resp = Response(msg_json, mimetype='application/json', status=500)
+        return set_resource_response(ewa_expapi_func.save_new_email(initial_email), "Email", create=True)
     else:
         #Updating draft
-        if ewa_expapi_func.update_draft(initial_email):
-            msg_json = json.dumps({"Message":"Draft updated and saved"})
-            resp = Response(msg_json, mimetype='application/json', status=200)
-        else:
-            msg_json = json.dumps({"Message":"Draft not updated"})
-            resp = Response(msg_json, mimetype='application/json', status=500)
-    return resp
+        return set_resource_response(ewa_expapi_func.update_draft(initial_email), "Draft", create=False)
+
 
 @app.route("/exp-api/update-user/<userid>", methods=["PUT"])
 def update_user_expapi(userid):
     user_details = request.json
-    if ewa_expapi_func.update_user(userid, user_details):
-        msg_json = json.dumps({"Message":"User successfully updated"})
-        resp = Response(msg_json, mimetype='application/json', status=200)
-    else:
-        msg_json = json.dumps({"Message":"User not updated"})
-        resp = Response(msg_json, mimetype='application/json', status=500)
-    return resp
+    return set_resource_response(ewa_expapi_func.update_user(userid, user_details), "User", create=False)
 
 @app.route("/exp-api/create-user", methods=["POST"])
 def create_user_expapi():
     user_details = request.json
-    if ewa_expapi_func.create_user(user_details):
-        msg_json = json.dumps({"Message":"User successfully created"})
-        resp = Response(msg_json, mimetype='application/json', status=201)
-    else:
-        msg_json = json.dumps({"Message":"User not created"})
-        resp = Response(msg_json, mimetype='application/json', status=500)
-    return resp
-
+    return set_resource_response(ewa_expapi_func.create_user(user_details), "User", create=True)
 #TESTAPI
 
 @app.route("/test-api/cookie")
