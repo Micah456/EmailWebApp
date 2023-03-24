@@ -40,6 +40,9 @@ function getEmailDetails(isDraft){
     if(toEmail == ""){
         toEmail = `{No Recipient Email}`
     }
+    else{
+        toEmail = toEmail.toLowerCase()
+    }
     if(subject == ""){
         subject = `{No Subject}`
     }

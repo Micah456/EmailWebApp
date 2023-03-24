@@ -1,24 +1,23 @@
 # EmailWebApp
 Email web application prototype to practice frontend, python, and perhaps sql
 
+Note: ports: exp-api: 5000, web-app: 5001, pro-api: 5002, sys-api:5003
+
 Design:
 database (csv for now) - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
 
--Use env variables for all base urls
 
 *Remaining tasks: Refactor tasks:*
-
--Automatically convert emails entered to lowercase
 -Create sql db for email and user data
 -Connect to databases
--Update html to use more semantic tags - e.g. nav, section, article, aside, etc
 -Update writeemail to use forms and use types/required fields etc. to validate input client side
--Improve accessibility of pages
 -Make JS dry
 
 *Previous tasks:*
+-Automatically convert emails entered to lowercase from app perspective (not api) - DONE
+-Use env variables for all base urls - DONE
 -Make ewa_expapi_func dry - DONE
 -Make ewa_server dry - DONE
 -Make ewa_proapi_func dry - DONE
@@ -55,6 +54,7 @@ Load emails into dashboard and set resulting inbox array - DONE
 
 *Possible future tasks (stretch goals- please branch):*
 -Create tests
+-Authentication
 -Implement print button for emails
 -Password rules
 -Change date displayed on emails to time or day of the week if within given time period
@@ -63,7 +63,13 @@ Load emails into dashboard and set resulting inbox array - DONE
 -Enable deletion of sent emails - involves trash folder - email has TrashFrom and TrashTo boolean attributes
 -Connect to database and rework sysapi
 -Media queries
+
+*Additional Tasks:*
+-Update html to use more semantic tags - e.g. nav, section, article, aside, etc
 -Running apis as separate scripts on different ports
+-Improve accessibility of pages
+-Update html to use more semantic tags - e.g. nav, section, article, aside, etc
+
 
 *Notes:*
 -Output folder is used for testing purposes only

@@ -28,7 +28,7 @@ function login(email,password){
         },
         //make sure to serialize your JSON body
         body: JSON.stringify({
-            email : email,
+            email : email.toLowerCase(),
             password: password
             })
         })

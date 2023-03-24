@@ -9,7 +9,7 @@ const newUserForm = document.getElementById("new-user-form")
 
 function createUserObject(){
     return {
-        "Email Address": emailAddressEl.value,
+        "Email Address": emailAddressEl.value.toLowerCase(),
         "First Name": firstNameEl.value,
         "Last Name": lastNameEl.value,
         "Gender": genderSelectorEl.value,
@@ -42,6 +42,9 @@ submitBtnEl.addEventListener('click', function(e){
                     alert("Error: user not created: " + response.statusText)
                 }
             })
+    }
+    else{
+        alert("Error: Please enter all required information correctly.")
     }
 })
 repeatPasswordEl.addEventListener('keyup',function(){
