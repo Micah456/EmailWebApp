@@ -1,11 +1,13 @@
-import json
+import json,os
 import pandas as pd
 import datetime as dt
 
-emailFile = "data/emailCollection.xlsx"
-userFile = "data/users.csv"
+emailFile = os.getenv("emailFile")
+userFile = os.getenv("userFile")
 
 def get_resource(read_func, filename):
+    print("################# emailFile: " + emailFile)
+    print("################# userFile: " + userFile)
     try:
         resource_df = read_func(filename)
         resource_df = resource_df.transpose()

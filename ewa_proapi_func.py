@@ -1,5 +1,4 @@
 import requests, json, ast, os
-from dotenv import load_dotenv
 
 sysapiBaseURL = os.getenv("sysapi")
 

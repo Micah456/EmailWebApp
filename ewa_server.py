@@ -1,7 +1,7 @@
 from flask import Flask, Response, request, render_template, send_file
-import ewa_sysapi_func, ewa_expapi_func, ewa_proapi_func, json, os
-from dotenv import load_dotenv
+import ewa_sysapi_func, ewa_expapi_func, ewa_proapi_func, json
 
+port = 5000
 app = Flask("Email Web App Server")
 
 # Error handling
@@ -268,6 +268,5 @@ def get_cookie():
     return resp
 
 if __name__=="__main__":
-    port = 5000
     app.run(debug=True, port=port) 
     # When no port is specified, starts at default port 5000

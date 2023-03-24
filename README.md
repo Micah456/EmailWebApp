@@ -5,15 +5,18 @@ Design:
 database (csv for now) - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
+
 -Use env variables for all base urls
 
-*Remaining tasks: *Refactor tasks:*
+*Remaining tasks: Refactor tasks:*
+
 -Automatically convert emails entered to lowercase
 -Create sql db for email and user data
 -Connect to databases
 -Update html to use more semantic tags - e.g. nav, section, article, aside, etc
 -Update writeemail to use forms and use types/required fields etc. to validate input client side
 -Improve accessibility of pages
+-Make JS dry
 
 *Previous tasks:*
 -Make ewa_expapi_func dry - DONE
@@ -51,6 +54,7 @@ Load emails into dashboard and set resulting inbox array - DONE
 -Review storage and format of data from prev project - DONE
 
 *Possible future tasks (stretch goals- please branch):*
+-Create tests
 -Implement print button for emails
 -Password rules
 -Change date displayed on emails to time or day of the week if within given time period
