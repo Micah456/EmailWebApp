@@ -1,5 +1,5 @@
 from flask import Flask, Response, request, render_template, send_file
-import ewa_sysapi_func, ewa_expapi_func, ewa_proapi_func, json
+import ewa_sysapi_func, ewa_expapi_func, ewa_proapi_func, ewa_sysapi_func2, json
 
 port = 5000
 app = Flask("Email Web App Server")
@@ -108,20 +108,22 @@ def hellosys():
 
 @app.route("/sys-api/users")
 def users():
-    return get_resource_response(ewa_sysapi_func.get_user_list())
+    #return get_resource_response(ewa_sysapi_func.get_user_list()) 
+    return get_resource_response(ewa_sysapi_func2.get_users())
 
 @app.route("/sys-api/users/<userid>")
 def user_id(userid):
-    return get_resource_response(ewa_sysapi_func.get_user_by_id(userid))
+    #return get_resource_response(ewa_sysapi_func.get_user_by_id(userid))
+    return get_resource_response(ewa_sysapi_func2.get_user_by_id(userid))
     
 
 @app.route("/sys-api/emails")
 def emails():
-    return get_resource_response(ewa_sysapi_func.get_emails())
+    return get_resource_response(ewa_sysapi_func2.get_emails())
 
 @app.route("/sys-api/emails/<emailid>")
 def email_id(emailid):
-    return get_resource_response(ewa_sysapi_func.get_email_by_id(emailid))
+    return get_resource_response(ewa_sysapi_func2.get_emails_by_id(emailid))
 
 #POST Requests
 @app.route("/sys-api/emails", methods=["POST"])
