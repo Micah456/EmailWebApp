@@ -4,18 +4,18 @@ Email web application prototype to practice frontend, python, and perhaps sql
 Note: ports: exp-api: 5000, web-app: 5001, pro-api: 5002, sys-api:5003
 
 Design:
-database (csv for now) - sysapi - processapi - expapi - html/css/js
+database - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
--Fix date bug in ewa_sysapi_func2 - date keeps getting set to 1970 instead of date of email
+-Test ewa_sysapi_func2 functions
 
 *Remaining tasks: Refactor tasks:*
--Test all ewa_sysapi_func2 functions in postman
--Test ewa_sysapi_func2 functions by logging into app and sending emails and saving drafts
+
 -Update writeemail to use forms and use types/required fields etc. to validate input client side
 -Make JS dry
 
 *Previous tasks:*
+-Fix date bug in ewa_sysapi_func2 - DONE
 -Create sql db for email and user data - DONE
 -Connect to databases - DONE
 -Automatically convert emails entered to lowercase from app perspective (not api) - DONE

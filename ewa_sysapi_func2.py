@@ -95,7 +95,7 @@ def stringify_email_data(email_dict):
 
 def ms_to_datetime_str(ms):
     #TODO FIX THIS!!! Gives the wrong date!
-    date = dt.fromtimestamp(ms/1000)
+    date = dt.fromtimestamp(ms)
     date_string = date.strftime("%d %b %Y %H:%M:%S:") + str(int(date.strftime("%f"))//1000)
     return date_string
 
@@ -219,5 +219,3 @@ myemail2 = {
     "To Name": "Marlee Vaughn",
     "Draft": False
 }
-
-
