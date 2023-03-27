@@ -31,10 +31,14 @@ def create_user_dict(row):
     }
 
 def create_email_dict(row):
+    tmstp = int(row[2].timestamp())
+    if tmstp < 1000000000000:
+        tmstp *= 1000
+    print(tmstp)
     return {
         "ID": row[0],
         "Subject": row[1],
-        "Date Sent": int(row[2].timestamp()),
+        "Date Sent": tmstp,
         "Message": row[3],
         "From Email": row[4],
         "From Name": row[5],
@@ -81,7 +85,9 @@ def stringify_user_data(user_dict):
     return data[1:len(data)-1]
 
 def stringify_email_data(email_dict):
+    print("stringifying email data")
     email_dict['Date Sent'] = ms_to_datetime_str(email_dict['Date Sent'])
+    print("date created")
     vals = list(email_dict.values())
     email_str = ""
     for i in range(len(vals)):
@@ -95,7 +101,7 @@ def stringify_email_data(email_dict):
 
 def ms_to_datetime_str(ms):
     #TODO FIX THIS!!! Gives the wrong date!
-    date = dt.fromtimestamp(ms)
+    date = dt.fromtimestamp(ms/1000)
     date_string = date.strftime("%d %b %Y %H:%M:%S:") + str(int(date.strftime("%f"))//1000)
     return date_string
 
@@ -130,6 +136,7 @@ def generate_statement(resource_dict, table, id):
     elif(table == users_table and id):
         statement = "UPDATE " + table + " SET " + stringify_user_data_update(resource_dict) + " WHERE ID = " + str(id)
     elif(table == emails_table and not(id)):
+        print("generating statment for new email")
         statement = "INSERT INTO " + table + " ([Subject], [Date Sent], [Message], [From Email], [From Name], [To Email], [To Name], [Draft]) VALUES (" + stringify_email_data(resource_dict)+ ");"
     else: #update email (with id)
         statement = "UPDATE " + table + " SET " + stringify_email_data_update(resource_dict) + " WHERE ID = " + str(id)
@@ -138,7 +145,9 @@ def generate_statement(resource_dict, table, id):
 def set_resource(resource_dict, table, id=None):
     try:
         cnxn = pyodbc.connect(conn_str)
+        print("connection established")
         cursor = cnxn.cursor()
+        print("cursor created")
         statement = generate_statement(resource_dict, table, id)
         print(statement)
         cursor.execute(statement)
@@ -171,9 +180,12 @@ def update_user(user_dict, userid):
     return set_resource(user_dict, users_table, userid)
 
 def add_email(email_dict):
+    print("########Adding email")
+    print(email_dict)
+    print(type(email_dict))
     return set_resource(email_dict, emails_table)
 
-def add_user(email_dict, emailid):
+def update_email(email_dict, emailid):
     return set_resource(email_dict, emails_table, emailid)
 
 

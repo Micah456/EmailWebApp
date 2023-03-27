@@ -28,8 +28,6 @@ const getCookie = (cookieKey) => {
   }
 }
 
-
-
 function getEmailHTML(emailData){
     let fromInitials = emailData['From Name'].split(" ")
     fromInitials = fromInitials[0][0] + fromInitials[1][0]
@@ -71,7 +69,7 @@ function convertDate(dateInMs){
 }
 
 function getShortDate(date){
-    return `${(date.getDate()).toString().padStart(2,0)}/${(date.getMonth()).toString().padStart(2,0)}/${date.getFullYear()}`
+    return `${(date.getDate()).toString().padStart(2,0)}/${(date.getMonth() + 1).toString().padStart(2,0)}/${date.getFullYear()}`
 }
 
 function loadEmail(id){

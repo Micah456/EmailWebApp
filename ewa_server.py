@@ -111,6 +111,10 @@ def users():
     #return get_resource_response(ewa_sysapi_func.get_user_list()) 
     return get_resource_response(ewa_sysapi_func2.get_users())
 
+@app.route("/old-sys-api/users")
+def old_users():
+    return get_resource_response(ewa_sysapi_func.get_user_list()) 
+
 @app.route("/sys-api/users/<userid>")
 def user_id(userid):
     #return get_resource_response(ewa_sysapi_func.get_user_by_id(userid))
@@ -121,6 +125,10 @@ def user_id(userid):
 def emails():
     return get_resource_response(ewa_sysapi_func2.get_emails())
 
+@app.route("/old-sys-api/emails")
+def old_emails():
+    return get_resource_response(ewa_sysapi_func.get_emails())
+
 @app.route("/sys-api/emails/<emailid>")
 def email_id(emailid):
     return get_resource_response(ewa_sysapi_func2.get_emails_by_id(emailid))
@@ -129,23 +137,23 @@ def email_id(emailid):
 @app.route("/sys-api/emails", methods=["POST"])
 def create_email():
     raw_resource = convert_resource_to_dict(request.json)
-    return set_resource_response(ewa_sysapi_func.create_email(raw_resource), "Email", create=True)
+    return set_resource_response(ewa_sysapi_func2.add_email(raw_resource), "Email", create=True)
 
 @app.route("/sys-api/users", methods=["POST"])
 def create_user():
     raw_resource = convert_resource_to_dict(request.json)
-    return set_resource_response(ewa_sysapi_func.create_user(raw_resource), "User", create=True)
+    return set_resource_response(ewa_sysapi_func2.add_user(raw_resource), "User", create=True)
 
 #PUT Requests
 @app.route("/sys-api/emails/<emailid>", methods=["PUT"])
 def update_email(emailid):
     raw_resource = convert_resource_to_dict(request.json)
-    return set_resource_response(ewa_sysapi_func.update_email(raw_resource, emailid), "Email", create=False)
+    return set_resource_response(ewa_sysapi_func2.update_email(raw_resource, emailid), "Email", create=False)
 
 @app.route("/sys-api/users/<userid>", methods=["PUT"])
 def update_user(userid):
     raw_resource = convert_resource_to_dict(request.json)
-    return set_resource_response(ewa_sysapi_func.update_user(raw_resource, userid), "User", create=False)
+    return set_resource_response(ewa_sysapi_func2.update_user(raw_resource, userid), "User", create=False)
 
 #ProAPI
 #GET Requests

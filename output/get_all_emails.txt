@@ -1,0 +1,56 @@
+{
+    "0":{
+        "ID":0,
+        "Subject":"First Email",
+        "Date Sent":1675258200000,
+        "Message":"Hi, bro!",
+        "From Email":"marleevaughn@outlook.com",
+        "From Name":"Marlee Vaughn",
+        "To Email":"duanevaughn@hotmail.com",
+        "To Name":"Duane Vaughn",
+        "Draft":false
+    },
+    "1":{
+        "ID":1,
+        "Subject":"RE: First Email",
+        "Date Sent":1675260840000,"Message":"Hey sis! I've updated this email on 22\/3\/23",
+        "From Email":"duanevaughn@hotmail.com",
+        "From Name":"Duane Vaughn",
+        "To Email":"marleevaughn@outlook.com",
+        "To Name":"Marlee Vaughn",
+        "Draft":false
+    },
+    "2":{
+        "ID":2,
+        "Subject":"Duane my dear brother",
+        "Date Sent":1675599600000,"Message":"This is my second email to you!",
+        "From Email":"marleevaughn@outlook.com",
+        "From Name":"Marlee Vaughn",
+        "To Email":"duanevaughn@hotmail.com",
+        "To Name":"Duane Vaughn",
+        "Draft":false
+    },
+    "3":{
+        "ID":3,
+        "Subject":"ID should be 3!",
+        "Date Sent":1675607946000,
+        "Message":"The id of this email should be 3. Email saved as draft again! Now it has been sent.",
+        "From Email":"marleevaughn@outlook.com",
+        "From Name":"Marlee Vaughn",
+        "To Email":"duanevaughn@hotmail.com",
+        "To Name":"Duane Vaughn",
+        "Draft":false
+    },
+    "4":{
+        "ID":4,
+        "Subject":"{No Subject}",
+        "Date Sent":1675604580000,
+        "Message":"This is my first draft. The ID should be 4. Draft Updated and sent!",
+        "From Email":"marleevaughn@outlook.com",
+        "From Name":"Marlee Vaughn",
+        "To Email":"duanevaughn@hotmail.com",
+        "To Name":"Duane Vaughn",
+        "Draft":false
+    },
+    "5":{
+        "ID":5,"Subject":"new email","Date Sent":1675604940000,"Message":"This is not a draft!","From Email":"marleevaughn@outlook.com","From Name":"Marlee Vaughn","To Email":"duanevaughn@hotmail.com","To Name":"Duane Vaughn","Draft":false},"6":{"ID":6,"Subject":"Postman","Date Sent":1676677740000,"Message":"I sent an email via postman","From Email":"marleevaughn@outlook.com","From Name":"Marlee Vaughn","To Email":"duanevaughn@hotmail.com","To Name":"Duane Vaughn","Draft":false},"7":{"ID":7,"Subject":"Postman2UPDATEII","Date Sent":1678206137000,"Message":"AGAIN I sent yet ANOTHER email via postman, BUT this one is updated","From Email":"marleevaughn@outlook.com","From Name":"Marlee Vaughn","To Email":"kalevaughn@gmail.com","To Name":"Kale Vaughn","Draft":true},"8":{"ID":8,"Subject":"Postman3","Date Sent":1676679620000,"Message":"AGAIN I sent yet ANOTHER email via postman","From Email":"marleevaughn@outlook.com","From Name":"Marlee Vaughn","To Email":"duanevaughn@hotmail.com","To Name":"Duane Vaughn","Draft":true},"9":{"ID":9,"Subject":"Postman4","Date Sent":1675000,"Message":"AGAIN I sent yet ANOTHER email via postman","From Email":"marleevaughn@outlook.com","From Name":"Marlee Vaughn","To Email":"duanevaughn@hotmail.com","To Name":"Duane Vaughn","Draft":true},"10":{"ID":10,"Subject":"Postman5PT7","Date Sent":1675260845000,"Message":"updated AGAIN I sent yet ANOTHER email via postman","From Email":"marleevaughn@outlook.com","From Name":"Marlee Vaughn","To Email":"duanevaughn@hotmail.com","To Name":"Duane Vaughn","Draft":false},"11":{"ID":11,"Subject":"Postman6","Date Sent":1675000,"Message":"AGAIN I sent yet ANOTHER email via postman","From Email":"marleevaughn@outlook.com","From Name":"Marlee Vaughn","To Email":"duanevaughn@hotmail.com","To Name":"Duane Vaughn","Draft":true},"12":{"ID":12,"Subject":"Postman8","Date Sent":1675260840000,"Message":"AGAIN I sent yet ANOTHER email via postman","From Email":"marleevaughn@outlook.com","From Name":"Marlee Vaughn","To Email":"duanevaughn@hotmail.com","To Name":"Duane Vaughn","Draft":true},"13":{"ID":13,"Subject":"Saving new email 2","Date Sent":1675260840000,"Message":"Hope this works AGAIN!","From Email":"duanevaughn@hotmail.com","From Name":"Duane Vaughn","To Email":"{No Recipient Email}","To Name":"{No Recipient Name}","Draft":true},"14":{"ID":14,"Subject":"First email via app","Date Sent":1678210218000,"Message":"Wish me luck!","From Email":"marleevaughn@outlook.com","From Name":"Marlee Vaughn","To Email":"duanevaughn@hotmail.com","To Name":"Duane Vaughn","Draft":false},"15":{"ID":15,"Subject":"First draft","Date Sent":1678210459000,"Message":"My first draft via app has been edited ONCE! and has id of 15 and has now been sent","From Email":"marleevaughn@outlook.com","From Name":"Marlee Vaughn","To Email":"kalevaughn@gmail.com","To Name":"Kale Vaughn","Draft":false},"16":{"ID":16,"Subject":"Postman10","Date Sent":1675260840000,"Message":"AGAIN I sent yet ANOTHER email via postman","From Email":"marleevaughn@outlook.com","From Name":"Marlee Vaughn","To Email":"duanevaughn@hotmail.com","To Name":"Duane Vaughn","Draft":true},"17":{"ID":17,"Subject":"Postman10","Date Sent":1675260840000,"Message":"AGAIN I sent yet ANOTHER email via postman","From Email":"marleevaughn@outlook.com","From Name":"Marlee Vaughn","To Email":"duanevaughn@hotmail.com","To Name":"Duane Vaughn","Draft":true},"18":{"ID":18,"Subject":"Postman11","Date Sent":1675260840000,"Message":"AGAIN I sent yet ANOTHER email via postman","From Email":"marleevaughn@outlook.com","From Name":"Marlee Vaughn","To Email":"duanevaughn@hotmail.com","To Name":"Duane Vaughn","Draft":true},"19":{"ID":19,"Subject":"Saving new email 3","Date Sent":1675260840000,"Message":"Hope this works AGAIN!","From Email":"duanevaughn@hotmail.com","From Name":"Duane Vaughn","To Email":"{No Recipient Email}","To Name":"{No Recipient Name}","Draft":true},"20":{"ID":20,"Subject":"Postman12","Date Sent":1675260840000,"Message":"AGAIN I sent yet ANOTHER email via postman","From Email":"marleevaughn@outlook.com","From Name":"Marlee Vaughn","To Email":"duanevaughn@hotmail.com","To Name":"Duane Vaughn","Draft":true},"21":{"ID":21,"Subject":"Postman13","Date Sent":1675260840000,"Message":"AGAIN I sent yet ANOTHER email via postman","From Email":"marleevaughn@outlook.com","From Name":"Marlee Vaughn","To Email":"duanevaughn@hotmail.com","To Name":"Duane Vaughn","Draft":true},"22":{"ID":22,"Subject":"Postman69","Date Sent":1675260845000,"Message":"AGAIN I sent yet ANOTHER email via postman","From Email":"marleevaughn@outlook.com","From Name":"Marlee Vaughn","To Email":"duanevaughn@hotmail.com","To Name":"Duane Vaughn","Draft":true},"23":{"ID":23,"Subject":"Postman9","Date Sent":1675260845000,"Message":"AGAIN I sent yet ANOTHER email via postman","From Email":"marleevaughn@outlook.com","From Name":"Marlee Vaughn","To Email":"duanevaughn@hotmail.com","To Name":"Duane Vaughn","Draft":true},"24":{"ID":24,"Subject":"Saving new email 093","Date Sent":1675260840000,"Message":"Hope this works AGAIN!","From Email":"duanevaughn@hotmail.com","From Name":"Duane Vaughn","To Email":"{No Recipient Email}","To Name":"{No Recipient Name}","Draft":true},"25":{"ID":25,"Subject":"Saving new email 123","Date Sent":1675260840000,"Message":"Hope this works AGAIN!","From Email":"duanevaughn@hotmail.com","From Name":"Duane Vaughn","To Email":"{No Recipient Email}","To Name":"{No Recipient Name}","Draft":true},"26":{"ID":26,"Subject":"Saving new email 123","Date Sent":1675260840000,"Message":"Hope this works AGAIN!","From Email":"duanevaughn@hotmail.com","From Name":"Duane Vaughn","To Email":"{No Recipient Email}","To Name":"{No Recipient Name}","Draft":true},"27":{"ID":27,"Subject":"Saving new email 1234","Date Sent":1675260840000,"Message":"Hope this works AGAIN!","From Email":"duanevaughn@hotmail.com","From Name":"Duane Vaughn","To Email":"{No Recipient Email}","To Name":"{No Recipient Name}","Draft":true},"28":{"ID":28,"Subject":"Saving new email 4321","Date Sent":1675260840000,"Message":"Hope this works AGAIN!","From Email":"duanevaughn@hotmail.com","From Name":"Duane Vaughn","To Email":"{No Recipient Email}","To Name":"{No Recipient Name}","Draft":true},"29":{"ID":29,"Subject":"Saving new email 135","Date Sent":1675260840000,"Message":"Hope this works AGAIN!","From Email":"duanevaughn@hotmail.com","From Name":"Duane Vaughn","To Email":"{No Recipient Email}","To Name":"{No Recipient Name}","Draft":true},"30":{"ID":30,"Subject":"Saving new email 1357","Date Sent":1675260840000,"Message":"Hope this works AGAIN!","From Email":"duanevaughn@hotmail.com","From Name":"Duane Vaughn","To Email":"{No Recipient Email}","To Name":"{No Recipient Name}","Draft":true},"31":{"ID":31,"Subject":"Hi Luke","Date Sent":1679657478000,"Message":"This is my first email as the developer.","From Email":"chelly-xox@hotmail.co.uk","From Name":"Micah Chuku","To Email":"lukevaughn@aol.com","To Name":"Luke Vaughn","Draft":false},"32":{"ID":32,"Subject":"Hi again, Luke","Date Sent":1679657729000,"Message":"'Sup bro?","From Email":"chelly-xox@hotmail.co.uk","From Name":"Micah Chuku","To Email":"lukevaughn@aol.com","To Name":"Luke Vaughn","Draft":true},"33":{"ID":33,"Subject":"Hello Luke","Date Sent":1679658243000,"Message":"I am writing this email with your email address capitalised. Hopefully the web app should turn this to lowercase before submitting to the API. Have a good day!","From Email":"n.schneider@gmail.com","From Name":"Natalia Schneider","To Email":"lukevaughn@aol.com","To Name":"Luke Vaughn","Draft":false},"34":{"ID":34,"Subject":"Hi again again","Date Sent":1679658835000,"Message":"Testing out after removing patter on email field","From Email":"chelly-xox@hotmail.co.uk","From Name":"Micah Chuku","To Email":"lukevaughn@aol.com","To Name":"Luke Vaughn","Draft":false}}
