@@ -2,6 +2,8 @@ const emailInputEl = document.getElementById("email-input")
 const passwordInputEl = document.getElementById("password-input")
 const loginBtnEl = document.getElementById("login-btn")
 const errorMessageEl = document.getElementById("error-message")
+const webapp = "http://127.0.0.1:5000/web-app"
+const expapi = "http://127.0.0.1:5000/exp-api"
 
 loginBtnEl.addEventListener('click', function(){
     errorMessageEl.style.display = "none"
@@ -20,7 +22,7 @@ loginBtnEl.addEventListener('click', function(){
 
 
 function login(email,password){
-    fetch("http://127.0.0.1:5000/exp-api/login", {
+    fetch(expapi + "/login", {
         method: "post",
         headers: {
             'Accept': 'application/json',
@@ -35,7 +37,7 @@ function login(email,password){
         .then(response => {
             if(response.ok){
                 console.log("Success!")
-                window.location.replace("http://127.0.0.1:5000/web-app/inbox")
+                window.location.replace(webapp + "/inbox")
             }
             else{
                 errorMessageEl.textContent = "Email or password is incorrect."
@@ -64,5 +66,5 @@ const getCookie = (cookieKey) => {
 let isLoggedIn = getCookie("is_logged_in")
 if(isLoggedIn == "True"){
     console.log("Already logged in: redirecting...")
-    window.location.replace("http://127.0.0.1:5000/web-app/inbox")
+    window.location.replace(webapp + "/inbox")
 }

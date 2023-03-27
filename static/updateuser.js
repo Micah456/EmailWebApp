@@ -16,6 +16,8 @@ const lastNameEl = document.getElementById("last-name")
 const genderSelectorEl = document.getElementById("gender-selector")
 const cancelBtnEl = document.getElementById("cancel-btn")
 
+const webapp = "http://127.0.0.1:5000/web-app"
+const expapi = "http://127.0.0.1:5000/exp-api"
 
 const getCookie = (cookieKey) => {
   let cookieName = `${cookieKey}=`;
@@ -37,7 +39,7 @@ const getCookie = (cookieKey) => {
 let isLoggedIn = getCookie("is_logged_in")
 if(isLoggedIn == "False"){
     console.log("Need to login. Redirecting...")
-    window.location.replace("http://127.0.0.1:5000/web-app/login")
+    window.location.replace(webapp + "/login")
 }
 let userEmailAddress = getCookie('email')
 //Removes quotes on email
@@ -45,32 +47,21 @@ userEmailAddress = userEmailAddress.substring(1,userEmailAddress.length-1)
 currentUserEl.textContent = `Welcome: ${userEmailAddress}`
 //Get user details
 let userDetails = null
-fetch(`http://127.0.0.1:5000/exp-api/load_dashboard?email=${userEmailAddress}`)
+fetch(expapi + `/load_dashboard?email=${userEmailAddress}`)
     .then(response => response.json())
     .then(data => {
         //console.log(data)
         userDetails = data['User Details']
         updateNamePlaceholders()
     })
-
-// TODO: DEBUG - delete this code in vscode
-/*userDetails = {
-        "ID": 0,
-        "Email Address": "marleevaughn@outlook.com",
-        "First Name": "Marlee",
-        "Last Name": "Vaughn",
-        "Gender": "F",
-        "Password": "pass1"
-}*/
     
-
 logoutBtnEl.addEventListener('click', function(){
-    fetch("http://127.0.0.1:5000/exp-api/logout")
+    fetch(expapi + "/logout")
         .then(response => {
             if(response.ok){
                 console.log(response.json())
             }
-            window.location.replace("http://127.0.0.1:5000/web-app/login")
+            window.location.replace(webapp + "/login")
         })
 
 })
@@ -157,7 +148,7 @@ function clearForm(type){
     }
 }
 function sendDetailsToDB(message, type){
-    let url = "http://127.0.0.1:5000/exp-api/update-user/" + userDetails['ID']
+    let url = expapi + "/update-user/" + userDetails['ID']
     fetch(url, {
         method: "put",
         headers: {
@@ -188,5 +179,5 @@ submitPasswordBtnEl.addEventListener('click', function(){
     
 })
 cancelBtnEl.addEventListener('click', function(){
-    window.location.replace("http://127.0.0.1:5000/web-app/inbox")
+    window.location.replace(webapp + "/inbox")
 })

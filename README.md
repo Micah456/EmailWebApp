@@ -7,14 +7,25 @@ Design:
 database - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
--Test ewa_sysapi_func2 functions
+-Create tests
 
-*Remaining tasks: Refactor tasks:*
+*Remaining tasks: stretch goals:*
 
--Update writeemail to use forms and use types/required fields etc. to validate input client side
--Make JS dry
+-Authentication
+-Implement print button for emails
+-Password rules
+-Change date displayed on emails to time or day of the week if within given time period
+-Implement forward and replies
+-Enable deletion of draft emails - involves trash folder
+-Enable deletion of sent emails - involves trash folder - email has TrashFrom and TrashTo boolean attributes
+-Connect to database and rework sysapi
+-Media queries
+
+
 
 *Previous tasks:*
+-Make JS dry - DONE
+-Test ewa_sysapi_func2 functions - DONE
 -Fix date bug in ewa_sysapi_func2 - DONE
 -Create sql db for email and user data - DONE
 -Connect to databases - DONE

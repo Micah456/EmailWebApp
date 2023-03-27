@@ -7,6 +7,9 @@ const repeatPasswordEl = document.getElementById("repeat-password")
 const submitBtnEl = document.getElementById("submit-btn")
 const newUserForm = document.getElementById("new-user-form")
 
+const webapp = "http://127.0.0.1:5000/web-app"
+const expapi = "http://127.0.0.1:5000/exp-api"
+
 function createUserObject(){
     return {
         "Email Address": emailAddressEl.value.toLowerCase(),
@@ -23,7 +26,7 @@ submitBtnEl.addEventListener('click', function(e){
     if(newUserForm.checkValidity()){
         let userDetails = createUserObject()
         console.log(userDetails)
-        fetch("http://127.0.0.1:5000/exp-api/create-user", {
+        fetch(expapi + "/create-user", {
             method: "post",
             headers: {
                 'Accept': 'application/json',
@@ -36,7 +39,7 @@ submitBtnEl.addEventListener('click', function(e){
                 if(response.ok){
                     console.log("Success!")
                     alert("User Created!")
-                    window.location.replace("http://127.0.0.1:5000/web-app/login")
+                    window.location.replace(webapp + "/login")
                 }
                 else{
                     alert("Error: user not created: " + response.statusText)

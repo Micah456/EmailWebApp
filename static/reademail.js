@@ -15,6 +15,9 @@ const closeSettingsBtnEl = document.getElementById("close-settings-btn")
 const slideSidebarEl = document.getElementById("slide-sidebar")
 const updateDetailsBtnEl = document.getElementById("update-details-btn")
 
+const webapp = "http://127.0.0.1:5000/web-app"
+const expapi = "http://127.0.0.1:5000/exp-api"
+
 
 const getCookie = (cookieKey) => {
     let cookieName = `${cookieKey}=`;
@@ -33,14 +36,12 @@ const getCookie = (cookieKey) => {
     }
 }
 
-
-
 function convertDate(dateInMs){
     return new Date(dateInMs)
 }
 
 function getLongDate(date){
-    return `${(date.getDate()).toString().padStart(2,0)}/${(date.getMonth()).toString().padStart(2,0)}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`
+    return `${(date.getDate()).toString().padStart(2,0)}/${(date.getMonth() + 1).toString().padStart(2,0)}/${date.getFullYear()} ${date.getHours().toString().padStart(2,0)}:${date.getMinutes().toString().padStart(2,0)}`
 }
 
 function getEmailHTML(emailData){
@@ -95,7 +96,7 @@ function setPageTitle(email){
 let isLoggedIn = getCookie("is_logged_in")
 if(isLoggedIn == "False"){
     console.log("Need to login. Redirecting...")
-    window.location.replace("http://127.0.0.1:5000/web-app/login")
+    window.location.replace(webapp + "/login")
 }
 
 let userEmailAddress = getCookie('email')
@@ -113,12 +114,10 @@ view = view.substring(indexOfPage+1)
 h1PageTitleEl.textContent = view.substring(0,1).toUpperCase() + view.substring(1)
 console.log(`View: ${view}`)
 let userDetails = null
-fetch(`http://127.0.0.1:5000/exp-api/load_dashboard?email=${userEmailAddress}`)
+fetch(expapi + `/load_dashboard?email=${userEmailAddress}`)
     .then(response => response.json())
     .then(data => {
-        //console.log(data)
         userDetails = data['User Details']
-        emailList = []
         switch(view) {
             case "inbox":
                 emailArray = data['User Emails']['Inbox Emails']
@@ -144,24 +143,24 @@ fetch(`http://127.0.0.1:5000/exp-api/load_dashboard?email=${userEmailAddress}`)
 
 //Buttons
 inboxBtnEl.addEventListener('click', function(){
-    window.location.replace("http://127.0.0.1:5000/web-app/inbox")
+    window.location.replace(webapp + "/inbox")
 })
 sentBtnEl.addEventListener('click', function(){
-    window.location.replace("http://127.0.0.1:5000/web-app/sent")
+    window.location.replace(webapp + "/sent")
 })
 draftsBtnEl.addEventListener('click', function(){
-    window.location.replace("http://127.0.0.1:5000/web-app/drafts")
+    window.location.replace(webapp + "/drafts")
 })
 newMailBtnEl.addEventListener('click', function(){
-    window.location.replace("http://127.0.0.1:5000/web-app/new_mail")
+    window.location.replace(webapp + "/new_mail")
 })
 logoutBtnEl.addEventListener('click', function(){
-    fetch("http://127.0.0.1:5000/exp-api/logout")
+    fetch(expapi + "/logout")
         .then(response => {
             if(response.ok){
                 console.log(response.json())
             }
-            window.location.replace("http://127.0.0.1:5000/web-app/login")
+            window.location.replace(webapp + "/login")
         })
 
 })
@@ -184,5 +183,5 @@ closeSettingsBtnEl.addEventListener('click', function(){
     console.log("closed!")
 })
 updateDetailsBtnEl.addEventListener('click', function(){
-    window.location.replace("http://127.0.0.1:5000/web-app/update-user")
+    window.location.replace(webapp + "/update-user")
 })
