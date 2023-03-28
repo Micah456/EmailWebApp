@@ -22,6 +22,7 @@ def validate(login_dict):
 
 def load_user(email):
     #Load all users
+    print(sysapiBaseURL)
     resp = requests.get(sysapiBaseURL + "/users")
     user_dict = resp.json()
     #Filter users

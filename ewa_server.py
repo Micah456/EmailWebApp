@@ -234,6 +234,8 @@ def log_out():
 @app.route("/exp-api/login", methods=["POST"])
 def login():
     login_dict = request.json
+    if type(login_dict) == str:
+        login_dict = json.loads(login_dict)
     print("Exp API: login_dict type: ", type(login_dict))
     if ewa_expapi_func.validate(login_dict):
         msg_json = json.dumps({"Message":"Login successful"})
@@ -248,6 +250,8 @@ def login():
 @app.route("/exp-api/save_email", methods=["POST", "PUT"])
 def save_email_expapi():
     initial_email = request.json
+    if type(initial_email) == str:
+        initial_email = json.loads(initial_email)
     print("EXP API: initial_email type: ", type(initial_email))
     if(request.method == "POST"):
         #New Email
@@ -260,11 +264,15 @@ def save_email_expapi():
 @app.route("/exp-api/update-user/<userid>", methods=["PUT"])
 def update_user_expapi(userid):
     user_details = request.json
+    if type(user_details) == str:
+        user_details = json.loads(user_details)
     return set_resource_response(ewa_expapi_func.update_user(userid, user_details), "User", create=False)
 
 @app.route("/exp-api/create-user", methods=["POST"])
 def create_user_expapi():
     user_details = request.json
+    if type(user_details) == str:
+        user_details = json.loads(user_details)
     return set_resource_response(ewa_expapi_func.create_user(user_details), "User", create=True)
 #TESTAPI
 

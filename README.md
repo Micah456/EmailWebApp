@@ -7,11 +7,9 @@ Design:
 database - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
--Create tests
+ -Authentication
 
 *Remaining tasks: stretch goals:*
-
--Authentication
 -Implement print button for emails
 -Password rules
 -Change date displayed on emails to time or day of the week if within given time period
@@ -24,6 +22,7 @@ database - sysapi - processapi - expapi - html/css/js
 
 
 *Previous tasks:*
+-Create tests for server
 -Make JS dry - DONE
 -Test ewa_sysapi_func2 functions - DONE
 -Fix date bug in ewa_sysapi_func2 - DONE

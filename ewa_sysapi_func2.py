@@ -188,6 +188,44 @@ def add_email(email_dict):
 def update_email(email_dict, emailid):
     return set_resource(email_dict, emails_table, emailid)
 
+def test_email_exists(email_dict):
+    cnxn = pyodbc.connect(conn_str)
+    cursor = cnxn.cursor()
+    try:
+        execute_statement = "SELECT * FROM " + emails_table + " WHERE [Subject] = '" + email_dict['Subject'] + "'"
+        #print("execute statement: " + execute_statement)
+        cursor.execute(execute_statement)
+        #print("successfully executed")
+        data = cursor.fetchall()
+        #print(data)
+        emails_dicts = collate_resource_dicts(data, create_email_dict) 
+        #print(emails_dicts)
+        return emails_dicts[0]
+    except Exception as e:
+        print(e)
+        return False
+
+def test_delete_email(email_dict):
+    try:
+        cnxn = pyodbc.connect(conn_str)
+        cursor = cnxn.cursor()
+        cursor.execute("DELETE FROM " + emails_table + " WHERE [Subject] = '" + email_dict['Subject'] + "'")
+        cursor.commit()
+        return True
+    except:
+        return False
+    
+def test_delete_user(userid):
+    try:
+        cnxn = pyodbc.connect(conn_str)
+        cursor = cnxn.cursor()
+        cursor.execute("DELETE FROM " + users_table + " WHERE [ID] = " + str(userid))
+        cursor.commit()
+        return True
+    except:
+        return False
+
+
 
 #print(get_resource("dbo.MyUser", create_user_dict))
 #print(get_resource("dbo.EmailCollectionView", create_email_dict, 1))
