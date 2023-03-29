@@ -1,5 +1,6 @@
 from flask import Flask, Response, request, render_template, send_file
 import ewa_sysapi_func, ewa_expapi_func, ewa_proapi_func, ewa_sysapi_func2, json
+from datetime import datetime as dt
 
 port = 5000
 app = Flask("Email Web App Server")
@@ -144,6 +145,13 @@ def create_user():
     raw_resource = convert_resource_to_dict(request.json)
     return set_resource_response(ewa_sysapi_func2.add_user(raw_resource), "User", create=True)
 
+@app.route("/sys-api/tokens", methods=["POST"])
+def add_token():
+    print("Sys-api: adding token")
+    raw_resource = convert_resource_to_dict(request.json)
+    print("resource converted")
+    return set_resource_response(ewa_sysapi_func2.add_token(raw_resource), "Token", create=True)
+
 #PUT Requests
 @app.route("/sys-api/emails/<emailid>", methods=["PUT"])
 def update_email(emailid):
@@ -171,6 +179,17 @@ def get_dashboard():
     user_email = request.args.get('email')
     return get_resource_response(ewa_proapi_func.get_dashboard(user_email))
 
+@app.route("/pro-api/generate-token")
+def generate_token_proapi():
+    email_address = request.args.get('email')
+    token_dict = ewa_proapi_func.generate_token(email_address)
+    if token_dict:
+        msg_json = json.dumps({"Message" : "Token generated successfully", "Token" : token_dict['Token'], "Expiry Date" : token_dict['Expiry Date']})
+        return Response(msg_json, mimetype='application/json', status=200)
+    else:
+        msg_json = json.dumps({"Message" : "Token NOT generated"})
+        return Response(msg_json, mimetype='application/json', status=400)
+
 #POST Requests
 @app.route("/pro-api/validate", methods=["POST"])
 def validate():
@@ -184,6 +203,8 @@ def validate():
         msg_json = json.dumps({"Message":"Login not validated"})
         return Response(msg_json, mimetype='application/json', status=401)
     
+
+
 @app.route("/pro-api/save_email", methods=["POST","PUT"])
 def save_email_proapi():
     initial_email = convert_resource_to_dict(request.json)
@@ -228,6 +249,7 @@ def log_out():
     resp = Response(msg_json, mimetype='application/json', status=200)
     resp.set_cookie("email",'',expires=0)
     resp.set_cookie("is_logged_in","False")
+    resp.set_cookie("Token", '',expires=0)
     return resp
 
 #POST Requests
@@ -240,8 +262,17 @@ def login():
     if ewa_expapi_func.validate(login_dict):
         msg_json = json.dumps({"Message":"Login successful"})
         resp = Response(msg_json, mimetype='application/json', status=200)
-        resp.set_cookie("email",login_dict['email'])
-        resp.set_cookie("is_logged_in","True")
+        token_dict = ewa_expapi_func.generate_token(login_dict['email'])
+        token = token_dict['Token']
+        expiry = dt.fromtimestamp(int(token_dict['Expiry Date'])/1000)
+        print(expiry)
+        if token:
+            resp.set_cookie("email",login_dict['email'])
+            resp.set_cookie("is_logged_in","True")
+            resp.set_cookie("Token", token, expires=expiry)
+        else:
+            msg_json = json.dumps({"Message":"Login unsuccessful", "Error" : "Could not generate token"})
+            resp = Response(msg_json, mimetype='application/json', status=500)
     else:
         msg_json = json.dumps({"Message":"Login unsuccessful"})
         resp = Response(msg_json, mimetype='application/json', status=401)

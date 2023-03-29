@@ -1,4 +1,5 @@
-import requests, json, ast, os
+import requests, json, ast, os, random, math
+from datetime import datetime, date, timedelta
 
 sysapiBaseURL = os.getenv("sysapi")
 
@@ -135,3 +136,51 @@ def create_user(user_details):
     #User does exist
     print("user found!")
     return False 
+
+def generate_token(email_address):
+    #Create random token
+    token = create_token()
+    print("token: " + token)
+    #Create expiry date for token
+    mydate = datetime.today()
+    mydate = mydate + timedelta(days=5)
+    print("Five days from now" + str(mydate))
+    #Convert date to ms
+    expdate = int(mydate.timestamp())
+    if expdate < 1000000000000:
+        expdate *= 1000
+    print(expdate)
+    #Create dict with email, token, and date
+    token_dict = {
+        "Email Address" : email_address,
+        "Token" : token,
+        "Expiry Date" : expdate
+    }
+    #Send dict to 
+    resp = requests.post(sysapiBaseURL + "/tokens", json=json.dumps(token_dict))
+    #If okay, return token
+    if resp.ok:
+        return token_dict
+    else:
+        return None
+
+def generate_char_frag(start, stop):
+    char_frag = ""
+    for i in range(start,stop):
+        char_frag += chr(i)
+    return char_frag
+    
+def generate_char_string():
+    char_string = generate_char_frag(48,58)
+    char_string += generate_char_frag(65,91)
+    char_string += generate_char_frag(97,123)
+    return char_string
+
+def create_token():
+    char_string = generate_char_string()
+    print(len(char_string))
+    token = ""
+    for i in range(25):
+        rand = math.floor(random.random() * 62)
+        token += char_string[rand]
+    return token

@@ -45,3 +45,10 @@ def update_user(userid, user_details):
 def create_user(user_details):
     resp = requests.post(proapiBaseURL + "/create-user", json=json.dumps(user_details))
     return resp.ok
+
+def generate_token(email_address):
+    resp = requests.get(proapiBaseURL + "/generate-token?email=" + email_address)
+    if resp.ok:
+        return resp.json()
+    else:
+        return None

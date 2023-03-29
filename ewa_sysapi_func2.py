@@ -12,6 +12,7 @@ password = os.getenv("db_admin_pwd")
 users_table = os.getenv("users_table")
 emails_view = os.getenv("emails_view")
 emails_table = os.getenv("emails_table")
+tokens_table = os.getenv("tokens_table")
 
 conn_str = ('Driver={SQL Server};'
                         'Server=' + server + ';'
@@ -100,7 +101,6 @@ def stringify_email_data(email_dict):
     return email_str
 
 def ms_to_datetime_str(ms):
-    #TODO FIX THIS!!! Gives the wrong date!
     date = dt.fromtimestamp(ms/1000)
     date_string = date.strftime("%d %b %Y %H:%M:%S:") + str(int(date.strftime("%f"))//1000)
     return date_string
@@ -187,6 +187,22 @@ def add_email(email_dict):
 
 def update_email(email_dict, emailid):
     return set_resource(email_dict, emails_table, emailid)
+
+def add_token(token_dict):
+    print("add token")
+    try:
+        cnxn = pyodbc.connect(conn_str)
+        cursor = cnxn.cursor()
+        date_as_str = ms_to_datetime_str(token_dict['Expiry Date'])
+        print(date_as_str)
+        value_str = "'" + token_dict['Email Address'] + "', '" + token_dict['Token'] + "', '" + date_as_str + "'"
+        print(value_str)
+        cursor.execute("INSERT INTO " + tokens_table + " ([Email Address], [Token], [Expiry Date]) VALUES (" + value_str + ")")
+        cursor.commit()
+        return True
+    except Exception as e:
+        print(e)
+        return False
 
 def test_email_exists(email_dict):
     cnxn = pyodbc.connect(conn_str)

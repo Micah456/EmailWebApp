@@ -7,7 +7,7 @@ Design:
 database - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
- -Authentication
+-Authentication : use token to very users on every page
 
 *Remaining tasks: stretch goals:*
 -Implement print button for emails
@@ -22,6 +22,7 @@ database - sysapi - processapi - expapi - html/css/js
 
 
 *Previous tasks:*
+-Authentication : create token when logging in
 -Create tests for server
 -Make JS dry - DONE
 -Test ewa_sysapi_func2 functions - DONE
