@@ -7,9 +7,10 @@ Design:
 database - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
--Authentication : use token to very users on every page
+-Fix the redirects - make it redirect automatically - will need to create a redirect page for each case and use settimeout in js to pause then, do redirect via js
 
 *Remaining tasks: stretch goals:*
+-Remove data and output folders, then ignore data in gitignore and add back data folder again
 -Implement print button for emails
 -Password rules
 -Change date displayed on emails to time or day of the week if within given time period
@@ -18,12 +19,13 @@ database - sysapi - processapi - expapi - html/css/js
 -Enable deletion of sent emails - involves trash folder - email has TrashFrom and TrashTo boolean attributes
 -Connect to database and rework sysapi
 -Media queries
-
-
+-Update urls so apis and webapp are restful
+-Update tests
 
 *Previous tasks:*
--Authentication : create token when logging in
--Create tests for server
+-Authentication : use token to very users on every page - DONE
+-Authentication : create token when logging in - DONE
+-Create tests for server - DONE
 -Make JS dry - DONE
 -Test ewa_sysapi_func2 functions - DONE
 -Fix date bug in ewa_sysapi_func2 - DONE
@@ -65,23 +67,10 @@ Load emails into dashboard and set resulting inbox array - DONE
 -Start building sysapi - DONE
 -Review storage and format of data from prev project - DONE
 
-*Possible future tasks (stretch goals- please branch):*
--Create tests
--Authentication
--Implement print button for emails
--Password rules
--Change date displayed on emails to time or day of the week if within given time period
--Implement forward and replies
--Enable deletion of draft emails - involves trash folder
--Enable deletion of sent emails - involves trash folder - email has TrashFrom and TrashTo boolean attributes
--Connect to database and rework sysapi
--Media queries
-
 *Additional Tasks:*
 -Update html to use more semantic tags - e.g. nav, section, article, aside, etc
 -Running apis as separate scripts on different ports
 -Improve accessibility of pages
--Update html to use more semantic tags - e.g. nav, section, article, aside, etc
 
 
 *Notes:*

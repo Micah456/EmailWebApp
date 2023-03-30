@@ -45,26 +45,3 @@ function login(email,password){
             }
         })
 }
-
-const getCookie = (cookieKey) => {
-    let cookieName = `${cookieKey}=`;
-  
-    let cookieArray = document.cookie.split(';');
-  
-    for (let cookie of cookieArray) {
-  
-      while (cookie.charAt(0) == ' ') {
-            cookie = cookie.substring(1, cookie.length);
-        }
-  
-      if (cookie.indexOf(cookieName) == 0) {
-            return cookie.substring(cookieName.length, cookie.length);
-        }
-    }
-}
-
-let isLoggedIn = getCookie("is_logged_in")
-if(isLoggedIn == "True"){
-    console.log("Already logged in: redirecting...")
-    window.location.replace(webapp + "/inbox")
-}

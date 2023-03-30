@@ -52,3 +52,11 @@ def generate_token(email_address):
         return resp.json()
     else:
         return None
+    
+def isAuthorised(token, email):
+    authorisation_dict = {
+        "Token" : token,
+        "Email Address" : email
+    }
+    resp = requests.post(proapiBaseURL + "/authorise", json=json.dumps(authorisation_dict))
+    return resp.ok

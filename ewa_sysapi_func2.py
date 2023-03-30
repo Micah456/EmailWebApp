@@ -48,6 +48,19 @@ def create_email_dict(row):
         "Draft": row[8]
     }
 
+def create_token_dict(row):
+    tmstp = int(row[2].timestamp())
+    if tmstp < 1000000000000:
+        tmstp *= 1000
+    #print(tmstp)
+    token_dict = {
+        "Email Address" : row[0],
+        "Token" : row[1],
+        "Expiry Date" : tmstp
+    }
+    #print(token_dict)
+    return token_dict
+
 def collate_resource_dicts(data, dict_func):
     users_dict = {}
     index = 0
@@ -56,12 +69,13 @@ def collate_resource_dicts(data, dict_func):
         index+=1
     return users_dict
 
-def get_resource(table, dict_func, id=None):
+def get_resource(table, dict_func, id=None, id_name="ID"):
     try:
         cnxn = pyodbc.connect(conn_str)
         cursor = cnxn.cursor()
         if(id):
-            cursor.execute("SELECT * FROM " + table + " WHERE ID = " + str(id))
+            print("SELECT * FROM " + table + " WHERE " + id_name + " = " + str(id))
+            cursor.execute("SELECT * FROM " + table + " WHERE " + id_name + " = " + str(id))
             data = cursor.fetchall()
             return json.dumps(dict_func(data[0]))
         else:
@@ -69,6 +83,7 @@ def get_resource(table, dict_func, id=None):
             data = cursor.fetchall()
             return json.dumps(collate_resource_dicts(data, dict_func))
     except:
+        print("Something went wrong!")
         return None
     
 def add_quotes_if_string(val):
@@ -203,6 +218,10 @@ def add_token(token_dict):
     except Exception as e:
         print(e)
         return False
+    
+def get_token_dict_by_token(token):
+    print("sys api 2: get token_dict")
+    return get_resource(tokens_table, create_token_dict , id="'" + token + "'", id_name="Token")
 
 def test_email_exists(email_dict):
     cnxn = pyodbc.connect(conn_str)

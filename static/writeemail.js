@@ -132,13 +132,6 @@ function displayDraft(email){
     
 }
 
-//Check if logged in
-let isLoggedIn = getCookie("is_logged_in")
-if(isLoggedIn == "False"){
-    console.log("Need to login. Redirecting...")
-    window.location.replace(webapp + "/login")
-}
-
 let userEmailAddress = getCookie('email')
 //Removes quotes on email
 userEmailAddress = userEmailAddress.substring(1,userEmailAddress.length-1)

@@ -184,3 +184,26 @@ def create_token():
         rand = math.floor(random.random() * 62)
         token += char_string[rand]
     return token
+
+def is_authorised(authorisation_dict):
+    #Query database for token_dict using token
+    query_token = authorisation_dict["Token"]
+    query_email = authorisation_dict["Email Address"]
+    if(query_token == None):
+        return False
+    resp = requests.get(sysapiBaseURL + "/token/" + query_token)
+    #Check resp.ok
+    if resp.ok:
+        #Check email matches, and token not expired
+        token_dict = resp.json()
+        print("token dict type: ")
+        print(type(token_dict))
+        expiry_date = datetime.fromtimestamp(token_dict['Expiry Date']/1000)
+        print("Expiry is: ")
+        print(expiry_date)
+        return query_email == token_dict['Email Address'] and not(isExpired(expiry_date))
+    return False
+
+def isExpired(expiry):
+    today = datetime.today()
+    return today > expiry 

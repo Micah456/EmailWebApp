@@ -1,4 +1,4 @@
-from flask import Flask, Response, request, render_template, send_file
+from flask import Flask, Response, request, render_template, send_file, redirect
 import ewa_sysapi_func, ewa_expapi_func, ewa_proapi_func, ewa_sysapi_func2, json
 from datetime import datetime as dt
 
@@ -24,6 +24,7 @@ def server_error(details="No details"):
 # Resource getters and setters
 
 def get_resource_response(resource):
+    print(resource)
     if resource:
         return Response(resource, mimetype='application/json')
     return resource_not_found()
@@ -44,6 +45,14 @@ def set_resource_response(response, resourceType, create=True):
     return resp
 
 # Other functions
+def authorise_user(cookies, template):
+    token = cookies.get("Token")
+    email = cookies.get("email")
+    print("Token: " + str(token))
+    print("Email: " + str(email))
+    if ewa_expapi_func.isAuthorised(token, email):
+        return render_template(template)
+    else: return redirect("http://127.0.0.1:5000/web-app/unauthorised", 403)
 
 def convert_resource_to_dict(resource):
     if type(resource) == str:
@@ -70,32 +79,48 @@ def load_bar_icon():
     filename = "images/three-bars-icon.jpg"
     return send_file(filename, mimetype='image/jpg')
 
-
 # Web App
+@app.route("/web-app/unauthorised")
+def load_unauthorised():
+    return render_template("unauthorised.html")
+
 @app.route("/web-app/login")
+def load_login():
+    token = request.cookies.get("Token")
+    email = request.cookies.get("email")
+    if not(ewa_expapi_func.isAuthorised(token, email)):
+        template = get_view(request.base_url) + ".html"
+        return render_template(template)
+    else:
+        return redirect("http://127.0.0.1:5000/web-app/inbox", code=400)
+
 @app.route("/web-app/inbox")
 @app.route("/web-app/sent")
 @app.route("/web-app/drafts")
 def load_page():
     template = get_view(request.base_url) + ".html"
-    return render_template(template)
+    cookies = request.cookies
+    return authorise_user(cookies, template)
 
 @app.route("/web-app/inbox/<emailid>")
 @app.route("/web-app/sent/<emailid>")
 @app.route("/web-app/drafts/<emailid>")
 def load_read_email(emailid):
+    cookies = request.cookies
     if request.args.get("edit"):
-        return render_template("writeemail.html")
+        return authorise_user(cookies, "writeemail.html")
     else:
-        return render_template("reademail.html")
+        return authorise_user(cookies, "reademail.html")
 
 @app.route("/web-app/new_mail")
 def write_email():
-    return render_template("writeemail.html")
+    cookies = request.cookies
+    return authorise_user(cookies, "writeemail.html")
 
 @app.route("/web-app/update-user")
 def update_user_webapp():
-    return render_template("updateuser.html")
+    cookies = request.cookies
+    return authorise_user(cookies, "updateuser.html")
 
 @app.route("/web-app/new-user")
 def new_user():
@@ -133,6 +158,10 @@ def old_emails():
 @app.route("/sys-api/emails/<emailid>")
 def email_id(emailid):
     return get_resource_response(ewa_sysapi_func2.get_emails_by_id(emailid))
+
+@app.route("/sys-api/token/<token>")
+def get_token_dict_by_token(token):
+    return get_resource_response(ewa_sysapi_func2.get_token_dict_by_token(token))
 
 #POST Requests
 @app.route("/sys-api/emails", methods=["POST"])
@@ -203,6 +232,15 @@ def validate():
         msg_json = json.dumps({"Message":"Login not validated"})
         return Response(msg_json, mimetype='application/json', status=401)
     
+@app.route("/pro-api/authorise", methods=["POST"])
+def authorise():
+    authorisation_dict = convert_resource_to_dict(request.json)
+    if ewa_proapi_func.is_authorised(authorisation_dict):
+        msg_json = json.dumps({"Message" : "User is authorised"})
+        return Response(msg_json, mimetype='application/json', status=202)
+    else:
+        msg_json = json.dumps({"Message" : "User is NOT authorised"})
+        return Response(msg_json, mimetype='application/json', status=403)
 
 
 @app.route("/pro-api/save_email", methods=["POST","PUT"])
@@ -268,7 +306,7 @@ def login():
         print(expiry)
         if token:
             resp.set_cookie("email",login_dict['email'])
-            resp.set_cookie("is_logged_in","True")
+            #resp.set_cookie("is_logged_in","True")
             resp.set_cookie("Token", token, expires=expiry)
         else:
             msg_json = json.dumps({"Message":"Login unsuccessful", "Error" : "Could not generate token"})
