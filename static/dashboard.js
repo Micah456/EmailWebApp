@@ -90,7 +90,7 @@ function loadEmail(id){
     console.log(id)
     window.location.replace(webapp + `/${view}/${id}`)
 }
-
+document.body.style.cursor = 'wait'
 let userEmailAddress = getCookie('email')
 //Removes quotes on email
 userEmailAddress = userEmailAddress.substring(1,userEmailAddress.length-1)
@@ -116,6 +116,7 @@ fetch(expapi + `/load_dashboard?email=${userEmailAddress}`)
                 setDashBoardData(data['User Emails']['Draft Emails'])
                 break
         }
+        document.body.style.cursor = 'default'
 
     })
 

@@ -5,7 +5,7 @@ const errorMessageEl = document.getElementById("error-message")
 const webapp = "http://127.0.0.1:5000/web-app"
 const expapi = "http://127.0.0.1:5000/exp-api"
 
-loginBtnEl.addEventListener('click', function(){
+function loginBtnEvent(){
     errorMessageEl.style.display = "none"
     email = emailInputEl.value
     password = passwordInputEl.value
@@ -18,10 +18,24 @@ loginBtnEl.addEventListener('click', function(){
         errorMessageEl.textContent = "Email or password is missing."
         errorMessageEl.style.display = "block"
     }
+}
+
+loginBtnEl.addEventListener('click', loginBtnEvent)
+
+passwordInputEl.addEventListener('keyup', function(){
+    if (event.keyCode === 13){
+        loginBtnEvent()
+    }
 })
 
+emailInputEl.addEventListener('keyup', function(){
+    if (event.keyCode === 13){
+        loginBtnEvent()
+    }
+})
 
 function login(email,password){
+    document.body.style.cursor = 'wait'
     fetch(expapi + "/login", {
         method: "post",
         headers: {
@@ -42,6 +56,7 @@ function login(email,password){
             else{
                 errorMessageEl.textContent = "Email or password is incorrect."
                 errorMessageEl.style.display = "block"
+                document.body.style.cursor = 'default'
             }
         })
 }

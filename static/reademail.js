@@ -92,7 +92,7 @@ function setPageTitle(email){
         pageTitle.innerHTML = email['Subject'] + " - " + userEmailAddress
     }
 }
-
+document.body.style.cursor = 'wait'
 let userEmailAddress = getCookie('email')
 //Removes quotes on email
 userEmailAddress = userEmailAddress.substring(1,userEmailAddress.length-1)
@@ -130,6 +130,7 @@ fetch(expapi + `/load_dashboard?email=${userEmailAddress}`)
         let selectedEmail = getEmailFromList(emailArray, emailID)
         emailPreviewEl.innerHTML = getEmailHTML(selectedEmail)
         setPageTitle(selectedEmail)
+        document.body.style.cursor = 'default'
     })
 
 //

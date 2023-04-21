@@ -7,21 +7,21 @@ Design:
 database - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
-
+-Enable deletion of draft emails - involves trash folder
 
 *Remaining tasks: stretch goals:*
 -Remove data and output folders, then ignore data in gitignore and add back data folder again
--Press enter as well as clicking button
 -Password rules
 -Change date displayed on emails to time or day of the week if within given time period
 -Implement forward and replies
--Enable deletion of draft emails - involves trash folder
 -Enable deletion of sent emails - involves trash folder - email has TrashFrom and TrashTo boolean attributes
 -Media queries
 -Update urls so apis and webapp are restful
 -Update tests
+-Separate the servers into separate files
 
 *Previous tasks:*
+-Press enter as well as clicking button on login page + add wait cursor - DONE
 -Implement print button for emails - DONE
 -Fix the redirects - make it redirect automatically - DONE
 -Authentication : use token to very users on every page - DONE

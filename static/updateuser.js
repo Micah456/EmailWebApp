@@ -35,7 +35,7 @@ const getCookie = (cookieKey) => {
       }
   }
 }
-
+document.body.style.cursor = 'wait'
 let userEmailAddress = getCookie('email')
 //Removes quotes on email
 userEmailAddress = userEmailAddress.substring(1,userEmailAddress.length-1)
@@ -48,9 +48,11 @@ fetch(expapi + `/load_dashboard?email=${userEmailAddress}`)
         //console.log(data)
         userDetails = data['User Details']
         updateNamePlaceholders()
+        document.body.style.cursor = 'default'
     })
     
 logoutBtnEl.addEventListener('click', function(){
+    document.body.style.cursor = 'wait'
     fetch(expapi + "/logout")
         .then(response => {
             if(response.ok){
@@ -144,6 +146,7 @@ function clearForm(type){
 }
 function sendDetailsToDB(message, type){
     let url = expapi + "/update-user/" + userDetails['ID']
+    document.body.style.cursor = 'wait'
     fetch(url, {
         method: "put",
         headers: {
@@ -154,6 +157,7 @@ function sendDetailsToDB(message, type){
         body: JSON.stringify(userDetails)
         })
         .then(response => {
+            document.body.style.cursor = 'default'
             if(response.ok){
                 console.log("Success!")
                 updateNamePlaceholders()
@@ -163,6 +167,7 @@ function sendDetailsToDB(message, type){
             else{
                 alert("Error: user details not saved: " + response.statusText)
             }
+            
         })
 }
 

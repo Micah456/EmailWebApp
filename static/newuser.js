@@ -26,6 +26,7 @@ submitBtnEl.addEventListener('click', function(e){
     if(newUserForm.checkValidity()){
         let userDetails = createUserObject()
         console.log(userDetails)
+        document.body.style.cursor = 'wait'
         fetch(expapi + "/create-user", {
             method: "post",
             headers: {
@@ -36,6 +37,7 @@ submitBtnEl.addEventListener('click', function(e){
             body: JSON.stringify(userDetails)
         })
              .then(async response => {
+                document.body.style.cursor = 'default'
                 if(response.ok){
                     console.log("Success!")
                     alert("User Created!")

@@ -131,7 +131,7 @@ function displayDraft(email){
     }
     
 }
-
+document.body.style.cursor = 'wait'
 let userEmailAddress = getCookie('email')
 //Removes quotes on email
 userEmailAddress = userEmailAddress.substring(1,userEmailAddress.length-1)
@@ -167,7 +167,7 @@ fetch(expapi + `/load_dashboard?email=${userEmailAddress}`)
             let selectedEmail = getEmailFromList(emailArray, emailID)
             displayDraft(selectedEmail)
         }
-        
+        document.body.style.cursor = 'default'
     })
 
 
