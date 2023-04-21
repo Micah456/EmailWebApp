@@ -81,10 +81,6 @@ def load_bar_icon():
     return send_file(filename, mimetype='image/jpg')
 
 # Web App
-@app.route("/web-app/redirect/<type>")
-def webapp_redirect(type):
-    return render_template("redirect", type=type)
-
 @app.route("/web-app/unauthorised")
 def load_unauthorised():
     return render_template("unauthorised.html")

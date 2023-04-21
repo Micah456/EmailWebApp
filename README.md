@@ -7,21 +7,22 @@ Design:
 database - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
--Implement print button for emails
+
 
 *Remaining tasks: stretch goals:*
 -Remove data and output folders, then ignore data in gitignore and add back data folder again
+-Press enter as well as clicking button
 -Password rules
 -Change date displayed on emails to time or day of the week if within given time period
 -Implement forward and replies
 -Enable deletion of draft emails - involves trash folder
 -Enable deletion of sent emails - involves trash folder - email has TrashFrom and TrashTo boolean attributes
--Connect to database and rework sysapi
 -Media queries
 -Update urls so apis and webapp are restful
 -Update tests
 
 *Previous tasks:*
+-Implement print button for emails - DONE
 -Fix the redirects - make it redirect automatically - DONE
 -Authentication : use token to very users on every page - DONE
 -Authentication : create token when logging in - DONE

@@ -10,6 +10,7 @@ const pageTitle = document.getElementById("page-title")
 const h1PageTitleEl = document.getElementById("h1-page-title")
 const editBtnEl = document.getElementById("edit-btn")
 const deleteBtnEl = document.getElementById("delete-btn")
+const printBtnEl = document.getElementById("print-btn")
 const settingsBtnEl = document.getElementById("settings-btn")
 const closeSettingsBtnEl = document.getElementById("close-settings-btn")
 const slideSidebarEl = document.getElementById("slide-sidebar")
@@ -164,6 +165,9 @@ editBtnEl.addEventListener('click', function(){
 })
 deleteBtnEl.addEventListener('click', function(){
     
+})
+printBtnEl.addEventListener('click', function(){
+    print()
 })
 settingsBtnEl.addEventListener('click', function(){
     slideSidebarEl.classList.remove("slide-sidebar-closed")
