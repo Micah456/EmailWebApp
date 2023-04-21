@@ -52,7 +52,8 @@ def authorise_user(cookies, template):
     print("Email: " + str(email))
     if ewa_expapi_func.isAuthorised(token, email):
         return render_template(template)
-    else: return redirect("http://127.0.0.1:5000/web-app/unauthorised", 403)
+    else:
+        return render_template("redirect.html", type="unauthorised")
 
 def convert_resource_to_dict(resource):
     if type(resource) == str:
@@ -80,6 +81,10 @@ def load_bar_icon():
     return send_file(filename, mimetype='image/jpg')
 
 # Web App
+@app.route("/web-app/redirect/<type>")
+def webapp_redirect(type):
+    return render_template("redirect", type=type)
+
 @app.route("/web-app/unauthorised")
 def load_unauthorised():
     return render_template("unauthorised.html")
@@ -92,7 +97,7 @@ def load_login():
         template = get_view(request.base_url) + ".html"
         return render_template(template)
     else:
-        return redirect("http://127.0.0.1:5000/web-app/inbox", code=400)
+        return render_template("redirect.html", type="inbox")
 
 @app.route("/web-app/inbox")
 @app.route("/web-app/sent")

@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang=en>
+<title>Redirecting...</title>
+<h1>Redirecting...</h1>
+<p id="ptag"></p>
+<script type="text/javascript">
+	var type ='{{ type }}'
+	console.log(type)
+	const pTagEl = document.getElementById("ptag")
+	let pTagContent = `You should be redirected automatically to the target URL: <a href="http://127.0.0.1:5000/web-app/${type}">http://127.0.0.1:5000/web-app/${type}</a>. If not, click
+	the link.`
+	pTagEl.innerHTML = pTagContent
+	setTimeout(function(){
+		window.location.replace(`http://127.0.0.1:5000/web-app/${type}`)
+	}, 1000)
+ </script>
+</html>

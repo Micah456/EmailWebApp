@@ -7,11 +7,10 @@ Design:
 database - sysapi - processapi - expapi - html/css/js
 
 *Current task:*
--Fix the redirects - make it redirect automatically - will need to create a redirect page for each case and use settimeout in js to pause then, do redirect via js
+-Implement print button for emails
 
 *Remaining tasks: stretch goals:*
 -Remove data and output folders, then ignore data in gitignore and add back data folder again
--Implement print button for emails
 -Password rules
 -Change date displayed on emails to time or day of the week if within given time period
 -Implement forward and replies
@@ -23,6 +22,7 @@ database - sysapi - processapi - expapi - html/css/js
 -Update tests
 
 *Previous tasks:*
+-Fix the redirects - make it redirect automatically - DONE
 -Authentication : use token to very users on every page - DONE
 -Authentication : create token when logging in - DONE
 -Create tests for server - DONE
